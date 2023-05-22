@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import PageTemplate from './PageTemplate';
+import {theme} from './theme'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+      <Routes>
+        <Route path="/" element={<PageTemplate activePage="home" />} />
+        <Route path="/about" element={<PageTemplate activePage="about" />} />
+        <Route path="/publications" element={<PageTemplate activePage="publications" />} />
+        <Route path="/contact" element={<PageTemplate activePage="contact" />} />
+      </Routes>
+    </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
