@@ -1,0 +1,9 @@
+
+{
+  "name": "Computational Epistemology Dossier",
+  "description": "A high-end architectural research portfolio and technical dossier featuring subtle floating ASCII elements, structural layouts, and an integrated AI research assistant.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
