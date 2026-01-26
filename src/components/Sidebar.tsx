@@ -55,9 +55,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                         <h1 className="font-extrabold text-3xl tracking-tighter leading-[0.9] mb-2 uppercase">
                             Hubert D. <br /> <span className="text-red-600">Zając</span>
                         </h1>
-                        <p className="mono text-[10px] text-gray-500 uppercase tracking-widest">Postdoc in Human-Centred AI</p>
-                        <p className="mono text-[10px] text-gray-500 uppercase tracking-widest">University of Copenhagen</p>
-                        <p className="mono text-[10px] text-gray-500 uppercase tracking-widest">Denmark</p>
+                        <p className="mono text-xs text-gray-500 uppercase tracking-widest">Postdoc in Human-Centred AI</p>
+                        <p className="mono text-xs text-gray-500 uppercase tracking-widest">University of Copenhagen</p>
+                        <p className="mono text-xs text-gray-500 uppercase tracking-widest">Denmark</p>
                     </div>
 
                     <nav className="flex flex-col space-y-1 mono text-[11px] uppercase tracking-tighter">
