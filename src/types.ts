@@ -4,6 +4,7 @@ export enum Section {
     RESEARCH = 'research',
     PUBLICATIONS = 'publications',
     PROJECTS = 'projects',
+    TEACHING_PROTOTYPES = 'teaching-prototypes',
     ABOUT = 'about'
 }
 

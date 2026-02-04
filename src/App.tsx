@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import FloatingAscii from './components/FloatingAscii';
 import Rotating3DMagic from './components/Rotating3DMagic';
@@ -7,10 +8,37 @@ import ResearchPage from './pages/ResearchPage';
 import PublicationsPage from './pages/PublicationsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
+import TeachingPrototypesPage from './pages/TeachingPrototypesPage';
+import HDaiPage from './pages/HDaiPage';
 import { Section } from './types';
 
 const App: React.FC = () => {
     const [section, setSection] = useState<Section>(Section.HOME);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    // Sync section state with route changes
+    useEffect(() => {
+        const path = location.pathname.substring(1);
+        if (path === '' || path === '/') {
+            setSection(Section.HOME);
+        } else if (Object.values(Section).includes(path as Section)) {
+            setSection(path as Section);
+        } else if (path !== 'hdai') {
+            // Only update for non-hdai routes
+            setSection(Section.HOME);
+        }
+    }, [location.pathname]);
+
+    // Handle section changes and navigate
+    const handleSetSection = (newSection: Section) => {
+        setSection(newSection);
+        if (newSection === Section.HOME) {
+            navigate('/');
+        } else {
+            navigate(`/${newSection}`);
+        }
+    };
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -38,25 +66,34 @@ const App: React.FC = () => {
                 return <PublicationsPage renderCardHeader={renderCardHeader} />;
             // case Section.PROJECTS:
             // return <ProjectsPage renderCardHeader={renderCardHeader} />;
+            case Section.TEACHING_PROTOTYPES:
+                return <TeachingPrototypesPage renderCardHeader={renderCardHeader} />;
             case Section.ABOUT:
                 return <AboutPage renderCardHeader={renderCardHeader} />;
             default:
-                return <HomePage setSection={setSection} renderCardHeader={renderCardHeader} />;
+                return <HomePage setSection={handleSetSection} renderCardHeader={renderCardHeader} />;
         }
     };
 
     return (
-        <div className="min-h-screen transition-colors duration-700 relative overflow-x-hidden bg-[#F1F3F4]">
-            <div className="fixed inset-0 transition-opacity duration-1000 blueprint-grid opacity-100"></div>
+        <>
+            <Routes>
+                <Route path="/hdai" element={<HDaiPage />} />
+                <Route path="/*" element={
+                    <div className="min-h-screen transition-colors duration-700 relative overflow-x-hidden bg-[#F1F3F4]">
+                        <div className="fixed inset-0 transition-opacity duration-1000 blueprint-grid opacity-100"></div>
 
-            <Rotating3DMagic />
-            <FloatingAscii />
-            <Sidebar currentSection={section} setSection={setSection} />
+                        <Rotating3DMagic />
+                        <FloatingAscii />
+                        <Sidebar currentSection={section} setSection={handleSetSection} />
 
-            <main className="lg:ml-[420px] p-6 md:p-12 lg:p-20 pt-24 lg:pt-12 relative z-10 transition-all duration-700 min-h-screen pb-24">
-                {renderContent()}
-            </main>
-        </div>
+                        <main className="lg:ml-[420px] p-6 md:p-12 lg:p-20 pt-24 lg:pt-12 relative z-10 transition-all duration-700 min-h-screen pb-24">
+                            {renderContent()}
+                        </main>
+                    </div>
+                } />
+            </Routes>
+        </>
     );
 };
 
