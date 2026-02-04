@@ -12,7 +12,7 @@ const PatientHeader: React.FC<Props> = ({ patient }) => {
       <div className="flex gap-8 items-center">
         <div>
           <h1 className="text-xl font-bold tracking-tight">{patient.name}</h1>
-          <p className="text-xs text-slate-300 font-mono">ID: {patient.id}</p>
+          <p className="text-xs text-slate-300 font-mono">Patient ID: {patient.id}</p>
         </div>
         <div className="hidden md:flex gap-6 text-sm">
           <div>
@@ -28,14 +28,6 @@ const PatientHeader: React.FC<Props> = ({ patient }) => {
             <span className="text-amber-400 font-medium">{patient.primaryDx}</span>
           </div>
         </div>
-      </div>
-      <div className="flex gap-2">
-        <button className="bg-slate-800 hover:bg-slate-700 px-3 py-1.5 text-xs rounded border border-slate-600 transition font-medium">
-          <i className="fa-solid fa-print mr-2 text-slate-300"></i> Print
-        </button>
-        <button className="bg-blue-600 hover:bg-blue-500 px-4 py-1.5 text-xs rounded transition font-bold shadow-sm">
-          <i className="fa-solid fa-plus mr-2"></i> New Entry
-        </button>
       </div>
     </div>
   );

@@ -60,20 +60,6 @@ const App: React.FC = () => {
       {/* Main Workspace */}
       <div className="flex flex-1 overflow-hidden flex-col lg:flex-row">
 
-        {/* Navigation Sidebar */}
-        <div className="hidden md:flex w-16 bg-slate-900 border-r border-slate-950 flex-col items-center py-8 gap-10 shadow-2xl shrink-0">
-          <i className="fa-solid fa-chart-line text-slate-500 hover:text-blue-400 cursor-pointer text-xl transition-all hover:scale-110"></i>
-          <div className="relative group">
-            <i className="fa-solid fa-clipboard-list text-blue-500 cursor-pointer text-2xl transition-all"></i>
-            <div className="absolute left-14 top-0 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap pointer-events-none transition-opacity">RECORDS</div>
-          </div>
-          <i className="fa-solid fa-vial text-slate-500 hover:text-blue-400 cursor-pointer text-xl transition-all hover:scale-110"></i>
-          <i className="fa-solid fa-pills text-slate-500 hover:text-blue-400 cursor-pointer text-xl transition-all hover:scale-110"></i>
-          <i className="fa-solid fa-image text-slate-500 hover:text-blue-400 cursor-pointer text-xl transition-all hover:scale-110"></i>
-          <div className="mt-auto mb-4">
-            <i className="fa-solid fa-gear text-slate-600 hover:text-slate-200 cursor-pointer text-xl transition-all"></i>
-          </div>
-        </div>
 
         {/* Dynamic Record View */}
         <div className="flex flex-1 overflow-hidden shadow-inner">
