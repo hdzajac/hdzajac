@@ -40,7 +40,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
               <td className="p-3 mono font-bold text-slate-950">{ep.Date_Start}</td>
               <td className="p-3 text-slate-800">{ep.Episode_Number}</td>
               <td className="p-3">
-                 <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-800 font-medium">{ep.Episode_Type}</span>
+                <span className="bg-slate-100 px-2 py-0.5 rounded text-slate-800 font-medium">{ep.Episode_Type}</span>
               </td>
               <td className="p-3 text-slate-800 font-medium">{ep.Department}</td>
               <td className="p-3 italic text-slate-700">{ep.Disposition}</td>
@@ -89,9 +89,9 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
               <i className="fa-solid fa-pen-to-square text-blue-600"></i> Assessment & Plan
             </h4>
             <div className="space-y-3">
-               <p><span className="font-bold text-slate-700 bg-slate-100 px-1">Subjective:</span> {ep.Chief_Complaint}</p>
-               <p className="border-t border-slate-100 pt-2"><span className="font-bold text-slate-700 bg-slate-100 px-1">Plan:</span> {ep.Disposition}</p>
-               {ep.Follow_Up && <p className="text-blue-800 font-medium">Follow-up: {ep.Follow_Up}</p>}
+              <p><span className="font-bold text-slate-700 bg-slate-100 px-1">Subjective:</span> {ep.Chief_Complaint}</p>
+              <p className="border-t border-slate-100 pt-2"><span className="font-bold text-slate-700 bg-slate-100 px-1">Plan:</span> {ep.Disposition}</p>
+              {ep.Follow_Up && <p className="text-blue-800 font-medium">Follow-up: {ep.Follow_Up}</p>}
             </div>
           </div>
         </div>
@@ -187,8 +187,8 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
               key={section.id}
               onClick={() => setActiveSection(section.id as Section)}
               className={`w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all duration-200
-                ${activeSection === section.id 
-                  ? 'bg-white text-blue-900 shadow-md font-black border-l-4 border-blue-700 scale-[1.02]' 
+                ${activeSection === section.id
+                  ? 'bg-white text-blue-900 shadow-md font-black border-l-4 border-blue-700 scale-[1.02]'
                   : 'text-slate-900 font-bold hover:bg-slate-200 hover:text-slate-950'}`}
             >
               <i className={`fa-solid ${section.icon} w-5 text-blue-800`}></i>
