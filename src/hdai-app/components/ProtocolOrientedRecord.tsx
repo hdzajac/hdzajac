@@ -6,328 +6,457 @@ interface Props {
   episodes: Episode[];
 }
 
-type ProtocolType = 'TIBIA' | 'FIBROSIS' | 'INTEGRATED_REHAB';
+interface ProtocolField {
+  field: string;
+  required: boolean;
+  collectedValue?: string;
+  collectedDate?: string;
+  status: 'complete' | 'incomplete' | 'pending';
+}
+
+interface Protocol {
+  id: string;
+  name: string;
+  condition: string;
+  description: string;
+  requiredFields: ProtocolField[];
+  treatmentPlan: {
+    step: string;
+    action: string;
+    status: 'complete' | 'in-progress' | 'pending';
+    evidence?: string;
+  }[];
+}
 
 const ProtocolOrientedRecord: React.FC<Props> = ({ episodes }) => {
-  const [activeProtocol, setActiveProtocol] = useState<ProtocolType>('INTEGRATED_REHAB');
+  const [selectedProtocol, setSelectedProtocol] = useState<string>('fracture-orif');
 
-  // Helper to find specific evidence in the data
-  const findEvidence = (searchTerms: string[]) => {
-    return episodes.find(e => 
-      searchTerms.some(term => 
-        e.Interventions.toLowerCase().includes(term.toLowerCase()) || 
-        e.Medications.toLowerCase().includes(term.toLowerCase())
-      )
-    );
-  };
-
-  // Define dynamic milestones with evidence strings pulled from CSV
-  const getTibiaMilestones = () => {
-    const m1 = findEvidence(['splint', 'x-ray r tibia']);
-    const m2 = findEvidence(['im nail', 'orif']);
-    const m3 = findEvidence(['ceftriaxone', 'antibiotic']);
-    const m4 = findEvidence(['callus', 'weight bearing']);
-    const m5 = findEvidence(['union complete']);
-
-    return [
-      { label: 'ED Stabilization & Splinting', status: m1 ? 'COMPLETED' : 'PENDING', evidence: m1?.Interventions, date: m1?.Date_Start, prov: m1?.Provider },
-      { label: 'Surgical ORIF (IM Nail)', status: m2 ? 'COMPLETED' : 'PENDING', evidence: m2?.Interventions, date: m2?.Date_Start, prov: m2?.Provider },
-      { label: 'Post-Op Antibiotic Prophylaxis', status: m3 ? 'COMPLETED' : 'PENDING', evidence: m3?.Medications, date: m3?.Date_Start, prov: m3?.Provider },
-      { label: 'Weight Bearing Progression (WBAT)', status: m4 ? 'COMPLETED' : 'PENDING', evidence: m4?.Interventions, date: m4?.Date_Start, prov: m4?.Provider },
-      { label: 'Final Bone Union Clearance', status: m5 ? 'COMPLETED' : 'PENDING', evidence: m5?.Interventions, date: m5?.Date_Start, prov: m5?.Provider },
-    ];
-  };
-
-  const getFibrosisMilestones = () => {
-    const m1 = findEvidence(['Pirfenidone']);
-    const m2 = findEvidence(['PFTs', 'FVC']);
-    const m3 = findEvidence(['Methylprednisolone', 'steroid']);
-    const m4 = findEvidence(['O2 4-6L', '5L NC']);
-    const m5 = findEvidence(['palliative', 'transplant']);
-
-    return [
-      { label: 'Maintenance Anti-fibrotic (Pirfenidone)', status: m1 ? 'ACTIVE' : 'NOT STARTED', evidence: m1?.Medications, date: m1?.Date_Start, prov: m1?.Provider },
-      { label: 'Baseline/Serial PFT Monitoring', status: m2 ? 'COMPLETED' : 'PENDING', evidence: m2?.Interventions, date: m2?.Date_Start, prov: m2?.Provider },
-      { label: 'Acute Exacerbation Protocol (Steroids)', status: m3 ? 'COMPLETED' : 'PENDING', evidence: m3?.Medications, date: m3?.Date_Start, prov: m3?.Provider },
-      { label: 'Advanced Oxygen Titration', status: m4 ? 'ACTIVE' : 'PENDING', evidence: `Target SpO2 met via: ${m4?.Medications || 'N/A'}`, date: m4?.Date_Start, prov: m4?.Provider },
-      { label: 'Advanced Care / Palliative Referral', status: m5 ? 'COMPLETED' : 'PENDING', evidence: m5?.Interventions, date: m5?.Date_Start, prov: m5?.Provider },
-    ];
-  };
-
-  // Variances are now filtered by protocol
-  const allVariances = [
-    { 
-      id: 'V1', 
-      type: 'CRITICAL', 
-      category: 'TIBIA', 
-      desc: 'Mobility Milestone Delayed: Physical Therapy deferred due to respiratory distress (SpO2 87% on RA).', 
-      date: '2024-03-18',
-      source: 'Pulmonology Conflict'
+  // Define protocol templates for well-understood conditions
+  const protocols: Protocol[] = [
+    {
+      id: 'fracture-orif',
+      name: 'Tibial Shaft Fracture - ORIF Protocol',
+      condition: 'Closed tibial shaft fracture requiring surgical fixation',
+      description: 'Standardized care pathway for operative management of tibial shaft fractures with intramedullary nailing',
+      requiredFields: [
+        {
+          field: 'Initial X-ray (AP & Lateral)',
+          required: true,
+          collectedValue: 'X-ray R tibia/fibula',
+          collectedDate: episodes[0]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Neurovascular exam documentation',
+          required: true,
+          collectedValue: 'Blood pressure, heart rate documented',
+          collectedDate: episodes[0]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Pre-op labs (CBC, CMP)',
+          required: true,
+          collectedValue: 'Pre-surgical workup completed',
+          collectedDate: episodes[1]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Surgical consent',
+          required: true,
+          collectedValue: 'Informed consent obtained',
+          collectedDate: episodes[1]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Post-op X-ray (hardware position)',
+          required: true,
+          collectedValue: 'ORIF with IM nail - position verified',
+          collectedDate: episodes[1]?.Date_End,
+          status: 'complete'
+        },
+        {
+          field: '2-week follow-up imaging',
+          required: true,
+          collectedValue: 'Wound inspection; X-ray R tibia',
+          collectedDate: episodes[2]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: '6-week callus formation assessment',
+          required: true,
+          collectedValue: 'X-ray R tibia - callus formation noted',
+          collectedDate: episodes[4]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Final union confirmation (12+ weeks)',
+          required: true,
+          collectedValue: 'X-ray R tibia - union complete',
+          collectedDate: episodes[6]?.Date_Start,
+          status: 'complete'
+        }
+      ],
+      treatmentPlan: [
+        {
+          step: '1. Emergency stabilization',
+          action: 'Splint application, pain control, prophylactic antibiotics if open fracture',
+          status: 'complete',
+          evidence: 'Morphine 4mg IV; splint application'
+        },
+        {
+          step: '2. Surgical fixation (within 24-48h)',
+          action: 'Intramedullary nail placement under fluoroscopy',
+          status: 'complete',
+          evidence: 'ORIF with IM nail 01/16'
+        },
+        {
+          step: '3. Post-operative care',
+          action: 'IV antibiotics 24h, DVT prophylaxis, pain management',
+          status: 'complete',
+          evidence: 'Enoxaparin 40mg SQ daily; Ceftriaxone 1g IV q24h'
+        },
+        {
+          step: '4. Weight-bearing progression',
+          action: 'WBAT (weight-bearing as tolerated) with PT supervision',
+          status: 'complete',
+          evidence: 'PT consult; gait assessment'
+        },
+        {
+          step: '5. Serial radiographic monitoring',
+          action: '2wk, 6wk, 12wk, 6mo follow-up X-rays',
+          status: 'complete',
+          evidence: 'Multiple follow-up X-rays documented showing progression to union'
+        },
+        {
+          step: '6. Return to full activity',
+          action: 'Clear for unrestricted activity when union complete',
+          status: 'complete',
+          evidence: 'Discharged from Ortho - union complete'
+        }
+      ]
     },
-    { 
-      id: 'V2', 
-      type: 'WARNING', 
-      category: 'FIBROSIS', 
-      desc: 'Medication Variance: Pirfenidone temporarily held during acute fracture stabilization for surgical safety.', 
-      date: '2024-01-15',
-      source: 'Surgical Contraindication'
-    },
-    { 
-      id: 'V3', 
-      type: 'INFO', 
-      category: 'INTEGRATED', 
-      desc: 'Protocol Modification: Integrated Rehab Protocol activated to include incentive spirometry during all gait training sessions.', 
-      date: '2024-05-12',
-      source: 'Multidisciplinary Board'
+    {
+      id: 'ipf-management',
+      name: 'Idiopathic Pulmonary Fibrosis - Chronic Management Protocol',
+      condition: 'Confirmed IPF with progressive decline in pulmonary function',
+      description: 'Evidence-based protocol for ongoing management of IPF including antifibrotic therapy, oxygen support, and monitoring',
+      requiredFields: [
+        {
+          field: 'Baseline PFTs (FVC, DLCO)',
+          required: true,
+          collectedValue: 'PFTs (FVC 58% predicted; DLCO 42%)',
+          collectedDate: episodes[3]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'HRCT chest imaging',
+          required: true,
+          collectedValue: 'HRCT chest ordered',
+          collectedDate: episodes[3]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Oxygen saturation assessment (room air)',
+          required: true,
+          collectedValue: 'SpO2 87% on room air',
+          collectedDate: episodes[3]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Serial PFT monitoring (q8-12 weeks)',
+          required: true,
+          collectedValue: 'PFTs (FVC 55% predicted; DLCO 39%) - showing decline',
+          collectedDate: episodes[5]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: '6-minute walk test',
+          required: true,
+          collectedValue: '6MWT 180m',
+          collectedDate: episodes[9]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Antifibrotic therapy tolerance assessment',
+          required: true,
+          collectedValue: 'Continue Pirfenidone',
+          collectedDate: episodes[5]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Oxygen requirement titration',
+          required: true,
+          collectedValue: 'O2 continuous 4-6L',
+          collectedDate: episodes[9]?.Date_Start,
+          status: 'complete'
+        },
+        {
+          field: 'Advanced care planning discussion',
+          required: true,
+          collectedValue: 'Palliative care referral',
+          collectedDate: episodes[9]?.Date_Start,
+          status: 'complete'
+        }
+      ],
+      treatmentPlan: [
+        {
+          step: '1. Initiate antifibrotic therapy',
+          action: 'Pirfenidone 801mg TID (titrate to tolerance) or Nintedanib',
+          status: 'complete',
+          evidence: 'Pirfenidone 801mg TID'
+        },
+        {
+          step: '2. Supplemental oxygen prescription',
+          action: 'Home O2 to maintain SpO2 >88-90%',
+          status: 'complete',
+          evidence: 'home O2 2-4L PRN, later increased to continuous'
+        },
+        {
+          step: '3. GI prophylaxis',
+          action: 'PPI for GERD management (common in IPF)',
+          status: 'complete',
+          evidence: 'Omeprazole 20mg daily'
+        },
+        {
+          step: '4. Pulmonary rehabilitation referral',
+          action: 'Exercise training, breathing techniques, education',
+          status: 'in-progress',
+          evidence: 'Respiratory therapy initiated'
+        },
+        {
+          step: '5. Monitor for acute exacerbations',
+          action: 'Educate on warning signs; treat with steroids/antibiotics if bacterial',
+          status: 'complete',
+          evidence: 'Acute exacerbation treated with Methylprednisolone 40mg IV q12h'
+        },
+        {
+          step: '6. Palliative care integration',
+          action: 'Address symptoms, advance directives, quality of life',
+          status: 'in-progress',
+          evidence: 'Palliative care referral made'
+        }
+      ]
     }
   ];
 
-  const filteredVariances = allVariances.filter(v => {
-    if (activeProtocol === 'INTEGRATED_REHAB') return true;
-    if (activeProtocol === 'TIBIA') return v.category === 'TIBIA' || v.category === 'INTEGRATED';
-    if (activeProtocol === 'FIBROSIS') return v.category === 'FIBROSIS' || v.category === 'INTEGRATED';
-    return false;
-  });
-
-  const renderProtocolHeader = (title: string, subtitle: string, color: string) => (
-    <div className={`p-6 border-b-4 ${color} bg-white shadow-md mb-6 rounded-t-xl`}>
-      <div className="flex justify-between items-start">
-        <div>
-          <h2 className="text-2xl font-black text-slate-950 tracking-tighter uppercase">{title}</h2>
-          <p className="text-sm font-bold text-slate-700 mt-1 uppercase tracking-wider">{subtitle}</p>
-        </div>
-        <div className="text-right">
-          <div className="text-[10px] font-black bg-slate-100 text-slate-800 px-2 py-1 rounded border border-slate-300 shadow-sm inline-block">
-            EVIDENCE-BASED PATHWAY v4.2
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderMilestones = (milestones: any[]) => (
-    <div className="space-y-4">
-      <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-        <i className="fa-solid fa-list-check text-blue-700"></i> Clinical Milestones & Evidence
-      </h3>
-      {milestones.map((m, i) => (
-        <div key={i} className={`flex flex-col bg-white border-2 rounded-xl shadow-sm overflow-hidden transition-all duration-200
-          ${m.status === 'PENDING' ? 'border-slate-200 opacity-60' : 'border-slate-300 hover:border-blue-400 hover:shadow-md'}`}>
-          <div className="flex items-center gap-4 p-4">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-black border-2
-              ${m.status === 'COMPLETED' ? 'bg-green-100 border-green-700 text-green-800' : 
-                m.status === 'ACTIVE' ? 'bg-blue-100 border-blue-700 text-blue-800 animate-pulse' : 
-                'bg-slate-100 border-slate-400 text-slate-500'}`}>
-              {m.status === 'COMPLETED' ? <i className="fa-solid fa-check"></i> : i + 1}
-            </div>
-            <div className="flex-1">
-              <div className="flex justify-between items-center">
-                <span className={`text-sm font-black ${m.status === 'PENDING' ? 'text-slate-500' : 'text-slate-900'}`}>{m.label}</span>
-                {m.date && (
-                  <span className="text-[10px] font-black text-blue-900 mono bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                    {m.date}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-          
-          {m.evidence && (
-            <div className="px-4 pb-4 pt-0">
-              <div className="ml-12 p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                <div className="text-[10px] font-black text-slate-500 uppercase mb-1 flex justify-between">
-                  <span>Record Evidence</span>
-                  <span>Source: {m.prov}</span>
-                </div>
-                <p className="text-xs font-bold text-slate-800 italic leading-snug">"{m.evidence}"</p>
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-
-  const renderVariances = () => (
-    <div className="mt-0 lg:mt-0">
-      <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-        <i className="fa-solid fa-triangle-exclamation text-red-600"></i> Protocol Deviations (Variances)
-      </h3>
-      <div className="space-y-3">
-        {filteredVariances.length > 0 ? filteredVariances.map(v => (
-          <div key={v.id} className={`p-5 rounded-xl border-l-[6px] shadow-md flex flex-col gap-2 transition-transform hover:scale-[1.02] bg-white
-            ${v.type === 'CRITICAL' ? 'border-red-700' : 
-              v.type === 'WARNING' ? 'border-amber-600' : 
-              'border-blue-700'}`}>
-            <div className="flex justify-between items-center">
-              <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm
-                ${v.type === 'CRITICAL' ? 'bg-red-700 text-white' : 
-                  v.type === 'WARNING' ? 'bg-amber-600 text-white' : 
-                  'bg-blue-700 text-white'}`}>
-                {v.type}
-              </span>
-              <span className="text-[10px] font-black text-slate-800 mono bg-slate-100 px-2 py-0.5 rounded border border-slate-200">{v.date}</span>
-            </div>
-            <p className="text-sm font-black text-slate-950 leading-tight mt-1">{v.desc}</p>
-            <div className="mt-2 pt-2 border-t border-slate-100 flex justify-between items-center">
-              <span className="text-[9px] font-black text-slate-500 uppercase">Reason: {v.source}</span>
-              <button className="text-[9px] font-black text-blue-700 uppercase hover:underline">Acknowledge Variance</button>
-            </div>
-          </div>
-        )) : (
-          <div className="p-8 text-center bg-slate-100 rounded-xl border-2 border-dashed border-slate-300">
-             <i className="fa-solid fa-check-circle text-green-600 text-3xl mb-2"></i>
-             <p className="text-xs font-black text-slate-600 uppercase">No active variances for this path</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  const selectedProtocolData = protocols.find(p => p.id === selectedProtocol) || protocols[0];
 
   return (
-    <div className="flex-1 flex overflow-hidden bg-slate-100">
-      {/* Protocol Sidebar */}
-      <div className="w-72 bg-slate-950 border-r border-slate-900 flex flex-col shadow-2xl">
-        <div className="p-6 border-b border-slate-800 bg-slate-950">
-          <h2 className="text-xs font-black text-slate-100 uppercase tracking-widest flex items-center gap-3">
-            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-            Pathway Engine
+    <div className="flex-1 flex overflow-hidden bg-slate-50">
+      {/* Protocol Selector Sidebar */}
+      <div className="w-80 bg-white border-r border-slate-300 flex flex-col shadow-lg">
+        <div className="p-4 bg-blue-900 text-white">
+          <h2 className="text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+            <i className="fa-solid fa-clipboard-check"></i>
+            Protocol Templates
           </h2>
+          <p className="text-xs text-blue-200 mt-1">Pre-structured care pathways</p>
         </div>
-        <nav className="flex-1 p-4 space-y-4">
-          <button 
-            onClick={() => setActiveProtocol('INTEGRATED_REHAB')}
-            className={`w-full text-left p-5 rounded-2xl transition-all duration-300 border-2
-              ${activeProtocol === 'INTEGRATED_REHAB' ? 'bg-indigo-700 border-indigo-400 shadow-xl scale-105 text-white' : 'bg-slate-900 border-slate-800 text-slate-500 hover:text-white hover:bg-slate-800'}`}
-          >
-            <div className="text-[10px] font-black uppercase tracking-widest mb-1 opacity-70 italic">Synchronized Path</div>
-            <div className="text-sm font-black flex items-center justify-between">
-               Integrated Rehab
-               <i className="fa-solid fa-rotate text-xs opacity-50"></i>
-            </div>
-          </button>
-          
-          <div className="py-2"><div className="h-px bg-slate-800 mx-2"></div></div>
 
-          <button 
-            onClick={() => setActiveProtocol('TIBIA')}
-            className={`w-full text-left p-5 rounded-2xl transition-all duration-300 border-2
-              ${activeProtocol === 'TIBIA' ? 'bg-blue-800 border-blue-500 shadow-xl scale-105 text-white' : 'bg-slate-900 border-slate-800 text-slate-500 hover:text-white hover:bg-slate-800'}`}
-          >
-            <div className="text-[10px] font-black uppercase tracking-widest mb-1 opacity-70">Single Discipline</div>
-            <div className="text-sm font-black flex items-center justify-between">
-               Orthopedic Path
-               <i className="fa-solid fa-bone text-xs opacity-50"></i>
-            </div>
-          </button>
-
-          <button 
-            onClick={() => setActiveProtocol('FIBROSIS')}
-            className={`w-full text-left p-5 rounded-2xl transition-all duration-300 border-2
-              ${activeProtocol === 'FIBROSIS' ? 'bg-emerald-800 border-emerald-500 shadow-xl scale-105 text-white' : 'bg-slate-900 border-slate-800 text-slate-500 hover:text-white hover:bg-slate-800'}`}
-          >
-            <div className="text-[10px] font-black uppercase tracking-widest mb-1 opacity-70">Single Discipline</div>
-            <div className="text-sm font-black flex items-center justify-between">
-               Respiratory Path
-               <i className="fa-solid fa-lungs text-xs opacity-50"></i>
-            </div>
-          </button>
+        <nav className="flex-1 p-4 space-y-3">
+          {protocols.map((protocol) => (
+            <button
+              key={protocol.id}
+              onClick={() => setSelectedProtocol(protocol.id)}
+              className={`w-full text-left p-4 rounded-lg transition-all ${selectedProtocol === protocol.id
+                ? 'bg-blue-100 border-2 border-blue-600 shadow-md'
+                : 'bg-slate-50 border-2 border-transparent hover:bg-slate-100'
+                }`}
+            >
+              <div className="flex items-start gap-3">
+                <i className={`fa-solid ${protocol.id === 'fracture-orif' ? 'fa-bone' : 'fa-lungs'
+                  } text-xl ${selectedProtocol === protocol.id ? 'text-blue-700' : 'text-slate-400'}`}></i>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-bold text-slate-900 mb-1">{protocol.name}</div>
+                  <div className="text-xs text-slate-600">{protocol.condition}</div>
+                </div>
+              </div>
+            </button>
+          ))}
         </nav>
-        <div className="p-5 bg-slate-950 border-t border-slate-800 text-[10px] font-black text-slate-600 uppercase italic tracking-widest">
-          POPR SYSTEM CORE v0.9
+
+        <div className="p-4 bg-slate-100 border-t border-slate-200">
+          <div className="text-xs text-slate-600">
+            <i className="fa-solid fa-lightbulb mr-1"></i>
+            Templates guide data collection and treatment
+          </div>
         </div>
       </div>
 
-      {/* Protocol Workspace */}
-      <div className="flex-1 overflow-y-auto p-8 bg-slate-50">
-        <div className="max-w-6xl mx-auto">
-          {activeProtocol === 'TIBIA' && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              {renderProtocolHeader('Tibia Fracture Management', 'Post-Op Surgical Pathway: IM Nail Protocol', 'border-blue-700')}
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                <div className="lg:col-span-3">{renderMilestones(getTibiaMilestones())}</div>
-                <div className="lg:col-span-2">{renderVariances()}</div>
+      {/* Protocol Content */}
+      <div className="flex-1 overflow-y-auto p-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Protocol Header */}
+          <div className="mb-8">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h1 className="text-3xl font-bold text-slate-900 mb-2">{selectedProtocolData.name}</h1>
+                <p className="text-lg text-slate-600">{selectedProtocolData.description}</p>
+              </div>
+              <div className="bg-blue-100 border border-blue-300 rounded-lg px-4 py-2">
+                <div className="text-xs font-bold text-blue-900 uppercase">Evidence-Based</div>
+                <div className="text-xs text-blue-700">Standard Template</div>
               </div>
             </div>
-          )}
 
-          {activeProtocol === 'FIBROSIS' && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              {renderProtocolHeader('Pulmonary Fibrosis Care', 'IPF Disease Management & Acute Exacerbation', 'border-emerald-700')}
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                <div className="lg:col-span-3">{renderMilestones(getFibrosisMilestones())}</div>
-                <div className="lg:col-span-2">{renderVariances()}</div>
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg">
+              <div className="text-sm font-bold text-blue-900 mb-1">Target Condition</div>
+              <div className="text-sm text-blue-800">{selectedProtocolData.condition}</div>
+            </div>
+          </div>
+
+          {/* Required Data Collection Fields */}
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <i className="fa-solid fa-list-check text-blue-600"></i>
+              Required Data Collection
+            </h2>
+            <p className="text-sm text-slate-600 mb-4">
+              Protocol specifies what data must be collected and documented for this condition
+            </p>
+
+            <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-slate-100 border-b-2 border-slate-200">
+                  <tr>
+                    <th className="text-left p-3 text-xs font-bold text-slate-700 uppercase">Required Field</th>
+                    <th className="text-left p-3 text-xs font-bold text-slate-700 uppercase">Status</th>
+                    <th className="text-left p-3 text-xs font-bold text-slate-700 uppercase">Collected Value</th>
+                    <th className="text-left p-3 text-xs font-bold text-slate-700 uppercase">Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {selectedProtocolData.requiredFields.map((field, index) => (
+                    <tr key={index} className="hover:bg-slate-50">
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          {field.required && (
+                            <span className="text-red-600 text-xs font-bold">*</span>
+                          )}
+                          <span className="text-sm text-slate-900">{field.field}</span>
+                        </div>
+                      </td>
+                      <td className="p-3">
+                        <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${field.status === 'complete'
+                          ? 'bg-green-100 text-green-800'
+                          : field.status === 'incomplete'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-slate-100 text-slate-600'
+                          }`}>
+                          {field.status === 'complete' && <i className="fa-solid fa-check"></i>}
+                          {field.status === 'incomplete' && <i className="fa-solid fa-exclamation"></i>}
+                          {field.status === 'pending' && <i className="fa-solid fa-clock"></i>}
+                          {field.status}
+                        </span>
+                      </td>
+                      <td className="p-3">
+                        <span className="text-sm text-slate-700">{field.collectedValue || '—'}</span>
+                      </td>
+                      <td className="p-3">
+                        <span className="text-xs font-mono text-slate-600">{field.collectedDate || '—'}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-4 flex items-center justify-between text-sm">
+              <div className="text-slate-600">
+                <span className="font-bold text-slate-900">
+                  {selectedProtocolData.requiredFields.filter(f => f.status === 'complete').length}
+                </span>
+                {' of '}
+                <span className="font-bold text-slate-900">
+                  {selectedProtocolData.requiredFields.length}
+                </span>
+                {' fields completed'}
+              </div>
+              <div className="text-red-600 text-xs">
+                * Required field
               </div>
             </div>
-          )}
+          </div>
 
-          {activeProtocol === 'INTEGRATED_REHAB' && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              {renderProtocolHeader('Synchronized Rehab Pathway', 'Complex Ortho-Respiratory Integration Plan', 'border-indigo-700')}
-              
-              <div className="bg-indigo-950 text-white p-8 rounded-3xl shadow-2xl mb-10 relative overflow-hidden border border-indigo-500/30">
-                <div className="absolute right-[-20px] top-[-20px] opacity-10 text-[12rem] rotate-12"><i className="fa-solid fa-lungs"></i></div>
-                <div className="relative z-10">
-                  <h3 className="text-xl font-black uppercase tracking-tighter mb-3 flex items-center gap-3">
-                     <i className="fa-solid fa-link text-indigo-400"></i>
-                     Protocol Conflict Resolution
-                  </h3>
-                  <p className="text-base font-medium text-indigo-100 leading-relaxed max-w-3xl">
-                    Standard <span className="font-black text-white bg-blue-600/40 px-1 rounded">Ortho Mobility</span> and <span className="font-black text-white bg-emerald-600/40 px-1 rounded">Pulm Conservation</span> pathways were in direct conflict. This integrated view overrides baseline parameters to prioritize respiratory stability while maintaining bone union stimulus.
-                  </p>
-                  <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                      <div className="text-[10px] font-black opacity-60 uppercase mb-1">Mobility Status</div>
-                      <div className="text-lg font-black text-blue-400 italic">Restricted by Dyspnea</div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                      <div className="text-[10px] font-black opacity-60 uppercase mb-1">Target SpO2</div>
-                      <div className="text-lg font-black text-emerald-400">92-94% (Titrated)</div>
-                    </div>
-                    <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                      <div className="text-[10px] font-black opacity-60 uppercase mb-1">Primary Variance</div>
-                      <div className="text-lg font-black text-red-400">V1 Critical</div>
+          {/* Standardized Treatment Plan */}
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <i className="fa-solid fa-route text-green-600"></i>
+              Standardized Treatment Plan
+            </h2>
+            <p className="text-sm text-slate-600 mb-4">
+              Protocol defines the treatment steps that should be followed for this condition
+            </p>
+
+            <div className="space-y-4">
+              {selectedProtocolData.treatmentPlan.map((step, index) => (
+                <div
+                  key={index}
+                  className={`bg-white border-2 rounded-lg overflow-hidden ${step.status === 'complete'
+                    ? 'border-green-200'
+                    : step.status === 'in-progress'
+                      ? 'border-blue-200'
+                      : 'border-slate-200'
+                    }`}
+                >
+                  <div className="p-4">
+                    <div className="flex items-start gap-4">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${step.status === 'complete'
+                        ? 'bg-green-100 text-green-800'
+                        : step.status === 'in-progress'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-slate-100 text-slate-600'
+                        }`}>
+                        {step.status === 'complete' ? <i className="fa-solid fa-check"></i> : index + 1}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between mb-2">
+                          <h3 className="text-base font-bold text-slate-900">{step.step}</h3>
+                          <span className={`px-3 py-1 rounded-full text-xs font-bold ${step.status === 'complete'
+                            ? 'bg-green-100 text-green-800'
+                            : step.status === 'in-progress'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-slate-100 text-slate-600'
+                            }`}>
+                            {step.status.replace('-', ' ')}
+                          </span>
+                        </div>
+                        <p className="text-sm text-slate-700 mb-3">{step.action}</p>
+
+                        {step.evidence && (
+                          <div className="bg-slate-50 border border-slate-200 rounded p-3">
+                            <div className="text-xs font-bold text-slate-500 uppercase mb-1">
+                              Evidence from Record
+                            </div>
+                            <p className="text-sm text-slate-800 italic">"{step.evidence}"</p>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
-                <div className="lg:col-span-3 space-y-8">
-                  <div className="bg-white p-8 rounded-2xl border-2 border-slate-200 shadow-sm">
-                    <h4 className="text-xs font-black text-slate-950 uppercase tracking-widest mb-6 flex items-center justify-between">
-                       <span>Active Pathway Bundles</span>
-                       <span className="text-indigo-600">POPR/SYNC-v1</span>
-                    </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <i className="fa-solid fa-pills text-indigo-600 bg-indigo-50 p-2 rounded-lg"></i>
-                        <div className="text-xs font-black text-slate-800 leading-tight">Pirfenidone 801mg (Cont.)</div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <i className="fa-solid fa-syringe text-indigo-600 bg-indigo-50 p-2 rounded-lg"></i>
-                        <div className="text-xs font-black text-slate-800 leading-tight">Methylprednisolone IV</div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <i className="fa-solid fa-person-walking text-indigo-600 bg-indigo-50 p-2 rounded-lg"></i>
-                        <div className="text-xs font-black text-slate-800 leading-tight">Incentive Spirometry w/ Gait</div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
-                        <i className="fa-solid fa-lungs text-indigo-600 bg-indigo-50 p-2 rounded-lg"></i>
-                        <div className="text-xs font-black text-slate-800 leading-tight">Continuous O2 Monitoring</div>
-                      </div>
-                    </div>
-                  </div>
-                  {renderMilestones([...getTibiaMilestones().slice(0,3), ...getFibrosisMilestones().slice(0,3)])}
-                </div>
-                <div className="lg:col-span-2">
-                  <div className="sticky top-8">
-                    {renderVariances()}
-                  </div>
-                </div>
+          {/* Protocol Information */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+            <div className="flex items-start gap-3">
+              <i className="fa-solid fa-info-circle text-2xl text-amber-600 mt-1"></i>
+              <div>
+                <h3 className="font-bold text-amber-900 mb-2">About Protocol-Driven Records</h3>
+                <p className="text-sm text-amber-900 leading-relaxed mb-2">
+                  Protocol-driven records use standardized templates for well-understood conditions. The template:
+                </p>
+                <ul className="text-sm text-amber-900 space-y-1 ml-4 list-disc">
+                  <li><strong>Dictates what specific data</strong> must be collected and documented</li>
+                  <li><strong>Defines the standard treatment plan</strong> that should be followed</li>
+                  <li><strong>Pre-structures the medical record</strong> to ensure consistency</li>
+                  <li><strong>Guides clinicians</strong> through evidence-based care pathways</li>
+                </ul>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

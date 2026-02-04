@@ -25,7 +25,7 @@ const App: React.FC = () => {
           className={`px-6 py-2 h-full text-[10px] font-black transition-all border-b-4 flex items-center gap-2 ${currentView === 'NARRATIVE' ? 'border-blue-700 text-blue-900 bg-white shadow-[0_-4px_10px_rgba(0,0,0,0.05)]' : 'border-transparent text-slate-700 hover:text-slate-950 hover:bg-slate-300'}`}
         >
           <i className="fa-solid fa-book-open"></i>
-          <span>NARRATIVE</span>
+          <span>INTRO</span>
         </button>
         <button
           onClick={() => setCurrentView('INTEGRATED')}
