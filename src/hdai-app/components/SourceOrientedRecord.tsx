@@ -31,7 +31,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
           <strong>Source:</strong> Physician Services Department — All medical progress notes arranged in reverse chronological order
         </p>
       </div>
-      
+
       {sortedEpisodes.map(ep => (
         <div key={ep.Episode_Number} className="bg-white border-2 border-slate-200 rounded-lg shadow-sm overflow-hidden">
           {/* Note Header */}
@@ -51,33 +51,33 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
               <span className="text-xs bg-white border border-slate-300 px-2 py-1 rounded font-medium">{ep.Department}</span>
             </div>
           </div>
-          
+
           {/* Note Content */}
           <div className="p-5 space-y-4 text-sm">
             <div>
               <div className="font-bold text-slate-700 mb-1">Chief Complaint / History:</div>
               <div className="text-slate-900 pl-3 border-l-2 border-slate-200">{ep.Chief_Complaint}</div>
             </div>
-            
+
             <div>
               <div className="font-bold text-slate-700 mb-1">Assessment & Plan:</div>
               <div className="text-slate-900 pl-3 border-l-2 border-slate-200">{ep.Disposition}</div>
             </div>
-            
+
             {ep.Medications && (
               <div>
                 <div className="font-bold text-slate-700 mb-1">Medications Ordered:</div>
                 <div className="text-slate-900 pl-3 border-l-2 border-blue-200 font-mono text-xs">{ep.Medications}</div>
               </div>
             )}
-            
+
             {ep.Interventions && (
               <div>
                 <div className="font-bold text-slate-700 mb-1">Procedures / Interventions:</div>
                 <div className="text-slate-900 pl-3 border-l-2 border-green-200">{ep.Interventions}</div>
               </div>
             )}
-            
+
             {ep.Follow_Up && (
               <div className="bg-amber-50 border border-amber-200 rounded p-3">
                 <div className="font-bold text-amber-900 text-xs mb-1">FOLLOW-UP INSTRUCTIONS</div>
@@ -85,7 +85,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
               </div>
             )}
           </div>
-          
+
           {/* Note Footer */}
           <div className="bg-slate-50 border-t border-slate-200 px-5 py-3 text-xs text-slate-600">
             <div className="flex justify-between">
@@ -106,7 +106,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
           <strong>Source:</strong> Nursing Department — Vital signs flow sheets and nursing assessments in chronological order
         </p>
       </div>
-      
+
       {/* Vital Signs Subsection */}
       <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden shadow-sm">
         <div className="bg-green-100 border-b-2 border-green-200 px-4 py-3">
@@ -115,7 +115,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             Vital Signs Flow Sheet
           </h4>
         </div>
-        
+
         <div className="overflow-x-auto">
           <table className="w-full text-xs text-left border-collapse whitespace-nowrap">
             <thead>
@@ -147,7 +147,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
           </table>
         </div>
       </div>
-      
+
       {/* Nursing Assessment Notes Subsection */}
       <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden shadow-sm">
         <div className="bg-green-100 border-b-2 border-green-200 px-4 py-3">
@@ -156,7 +156,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             Nursing Assessment Notes
           </h4>
         </div>
-        
+
         <div className="p-4 space-y-3">
           {sortedEpisodes.slice(0, 5).map(ep => (
             <div key={ep.Episode_Number} className="border-l-4 border-green-300 pl-4 py-2 bg-green-50/30">
@@ -165,7 +165,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
                 <span className="text-xs text-slate-600">{ep.Department}</span>
               </div>
               <div className="text-sm text-slate-800">
-                Patient assessed for {ep.Chief_Complaint.toLowerCase()}. Vital signs documented above. 
+                Patient assessed for {ep.Chief_Complaint.toLowerCase()}. Vital signs documented above.
                 {ep.Episode_Type === 'Inpatient' && ' Continuing inpatient monitoring.'}
                 {ep.Episode_Type === 'Emergency' && ' Emergency evaluation completed.'}
               </div>
@@ -179,12 +179,12 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
   // Laboratory Data - Subdivided by test type, arranged chronologically
   const renderLabs = () => {
     const pftTests = sortedEpisodes.filter(ep => ep.Interventions.toLowerCase().includes('pft'));
-    const bloodTests = sortedEpisodes.filter(ep => 
-      ep.Interventions.toLowerCase().includes('cbc') || 
+    const bloodTests = sortedEpisodes.filter(ep =>
+      ep.Interventions.toLowerCase().includes('cbc') ||
       ep.Interventions.toLowerCase().includes('bmp') ||
       ep.Interventions.toLowerCase().includes('creatinine')
     );
-    
+
     return (
       <div className="space-y-6">
         <div className="bg-purple-50 border-l-4 border-purple-600 p-4 rounded-r mb-6">
@@ -192,7 +192,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             <strong>Source:</strong> Laboratory Services — Test results subdivided by test type, arranged chronologically within each subsection
           </p>
         </div>
-        
+
         {/* Pulmonary Function Tests Subsection */}
         {pftTests.length > 0 && (
           <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden shadow-sm">
@@ -202,7 +202,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
                 Pulmonary Function Tests (PFTs)
               </h4>
             </div>
-            
+
             <div className="p-4 space-y-4">
               {pftTests.map(ep => (
                 <div key={ep.Episode_Number} className="border border-slate-200 rounded-lg overflow-hidden">
@@ -221,7 +221,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             </div>
           </div>
         )}
-        
+
         {/* Blood Tests / Chemistry Subsection */}
         {bloodTests.length > 0 && (
           <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden shadow-sm">
@@ -231,7 +231,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
                 Hematology & Chemistry Panels
               </h4>
             </div>
-            
+
             <div className="p-4 space-y-4">
               {bloodTests.map(ep => (
                 <div key={ep.Episode_Number} className="border border-slate-200 rounded-lg overflow-hidden">
@@ -250,7 +250,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             </div>
           </div>
         )}
-        
+
         {pftTests.length === 0 && bloodTests.length === 0 && (
           <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-8 text-center">
             <i className="fa-solid fa-flask text-4xl text-slate-300 mb-3"></i>
@@ -263,22 +263,22 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
 
   // Radiology Reports - Subdivided by imaging modality, arranged chronologically
   const renderRadiology = () => {
-    const imagingStudies = sortedEpisodes.filter(ep => 
-      ep.Interventions.toLowerCase().includes('x-ray') || 
-      ep.Interventions.toLowerCase().includes('hrct') || 
+    const imagingStudies = sortedEpisodes.filter(ep =>
+      ep.Interventions.toLowerCase().includes('x-ray') ||
+      ep.Interventions.toLowerCase().includes('hrct') ||
       ep.Interventions.toLowerCase().includes('cxr') ||
       ep.Interventions.toLowerCase().includes('ct')
     );
-    
-    const xrays = imagingStudies.filter(ep => 
-      ep.Interventions.toLowerCase().includes('x-ray') && 
+
+    const xrays = imagingStudies.filter(ep =>
+      ep.Interventions.toLowerCase().includes('x-ray') &&
       !ep.Interventions.toLowerCase().includes('ct')
     );
-    const ctScans = imagingStudies.filter(ep => 
-      ep.Interventions.toLowerCase().includes('hrct') || 
+    const ctScans = imagingStudies.filter(ep =>
+      ep.Interventions.toLowerCase().includes('hrct') ||
       ep.Interventions.toLowerCase().includes('ct')
     );
-    
+
     return (
       <div className="space-y-6">
         <div className="bg-cyan-50 border-l-4 border-cyan-600 p-4 rounded-r mb-6">
@@ -286,7 +286,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             <strong>Source:</strong> Radiology Department — Imaging reports subdivided by modality, arranged chronologically
           </p>
         </div>
-        
+
         {/* X-Ray Studies Subsection */}
         {xrays.length > 0 && (
           <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden shadow-sm">
@@ -296,7 +296,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
                 Radiography (X-Ray) Studies
               </h4>
             </div>
-            
+
             <div className="p-4 space-y-4">
               {xrays.map(ep => (
                 <div key={ep.Episode_Number} className="border-2 border-slate-300 rounded-lg bg-slate-50 overflow-hidden">
@@ -330,7 +330,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             </div>
           </div>
         )}
-        
+
         {/* CT/HRCT Studies Subsection */}
         {ctScans.length > 0 && (
           <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden shadow-sm">
@@ -340,7 +340,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
                 Computed Tomography (CT/HRCT) Studies
               </h4>
             </div>
-            
+
             <div className="p-4 space-y-4">
               {ctScans.map(ep => (
                 <div key={ep.Episode_Number} className="border-2 border-slate-300 rounded-lg bg-slate-50 overflow-hidden">
@@ -374,7 +374,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             </div>
           </div>
         )}
-        
+
         {imagingStudies.length === 0 && (
           <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-8 text-center">
             <i className="fa-solid fa-x-ray text-4xl text-slate-300 mb-3"></i>
@@ -384,7 +384,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
       </div>
     );
   };
-  
+
   // Pharmacy Records - Medication orders arranged chronologically
   const renderPharmacy = () => (
     <div className="space-y-6">
@@ -393,7 +393,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
           <strong>Source:</strong> Pharmacy Services — Medication orders and administration records arranged chronologically
         </p>
       </div>
-      
+
       <div className="bg-white border-2 border-slate-200 rounded-lg overflow-hidden shadow-sm">
         <div className="bg-orange-100 border-b-2 border-orange-200 px-4 py-3">
           <h4 className="text-sm font-bold text-orange-900 uppercase flex items-center gap-2">
@@ -401,7 +401,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             Medication Administration Record (MAR)
           </h4>
         </div>
-        
+
         <div className="p-4 space-y-3">
           {sortedEpisodes.filter(ep => ep.Medications).map(ep => (
             <div key={ep.Episode_Number} className="border border-slate-200 rounded-lg overflow-hidden">
@@ -424,17 +424,17 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
       </div>
     </div>
   );
-  
+
   // Therapy Notes - Physical/Respiratory therapy notes arranged chronologically
   const renderTherapy = () => {
-    const therapyEpisodes = sortedEpisodes.filter(ep => 
-      ep.Interventions.toLowerCase().includes('pt ') || 
+    const therapyEpisodes = sortedEpisodes.filter(ep =>
+      ep.Interventions.toLowerCase().includes('pt ') ||
       ep.Interventions.toLowerCase().includes('physical therapy') ||
       ep.Interventions.toLowerCase().includes('respiratory') ||
       ep.Interventions.toLowerCase().includes('gait') ||
       ep.Interventions.toLowerCase().includes('rehab')
     );
-    
+
     return (
       <div className="space-y-6">
         <div className="bg-teal-50 border-l-4 border-teal-600 p-4 rounded-r mb-6">
@@ -442,7 +442,7 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
             <strong>Source:</strong> Rehabilitation Services — Physical and respiratory therapy notes arranged chronologically
           </p>
         </div>
-        
+
         {therapyEpisodes.length > 0 ? (
           <div className="space-y-4">
             {therapyEpisodes.map(ep => (
@@ -456,25 +456,25 @@ const SourceOrientedRecord: React.FC<Props> = ({ episodes }) => {
                     <span className="text-xs font-mono font-bold text-slate-900">{ep.Date_Start}</span>
                   </div>
                 </div>
-                
+
                 <div className="p-4 space-y-3 text-sm">
                   <div>
                     <div className="font-bold text-slate-700 mb-1">Interventions Provided:</div>
                     <div className="text-slate-900 pl-3 border-l-2 border-teal-200">{ep.Interventions}</div>
                   </div>
-                  
+
                   <div>
                     <div className="font-bold text-slate-700 mb-1">Patient Status:</div>
                     <div className="text-slate-900 pl-3 border-l-2 border-teal-200">{ep.Chief_Complaint}</div>
                   </div>
-                  
+
                   <div className="bg-teal-50 border border-teal-200 rounded p-3 text-xs">
-                    <span className="font-bold">Therapist Notes:</span> Patient tolerated therapy session. 
+                    <span className="font-bold">Therapist Notes:</span> Patient tolerated therapy session.
                     {ep.Episode_Type === 'Outpatient' && ' Continue outpatient rehabilitation program.'}
                     {ep.Episode_Type === 'Inpatient' && ' Ongoing inpatient rehabilitation.'}
                   </div>
                 </div>
-                
+
                 <div className="bg-slate-50 border-t border-slate-200 px-4 py-2 text-xs text-slate-600">
                   Therapist: {ep.Provider}
                 </div>
