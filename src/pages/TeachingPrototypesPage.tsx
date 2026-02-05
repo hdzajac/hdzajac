@@ -12,7 +12,7 @@ const TeachingPrototypesPage: React.FC<TeachingPrototypesPageProps> = ({ renderC
         {
             id: 'patient-records-viewer',
             title: 'Patient Records Viewer',
-            description: 'Interactive EHR prototype demonstrating four paradigms for organizing medical records: integrated chronological, source-oriented, protocol-oriented, and problem-oriented views.',
+            description: 'Interactive EHR prototype demonstrating four paradigms for organising medical records: integrated chronological, source-oriented, protocol-oriented, and problem-oriented views.',
             icon: 'medical_information',
             path: '/hdai',
             color: 'blue'
@@ -20,7 +20,7 @@ const TeachingPrototypesPage: React.FC<TeachingPrototypesPageProps> = ({ renderC
         {
             id: 'data-quality-explorer',
             title: 'Data Quality Explorer',
-            description: 'Interactive tool for exploring data quality issues in clinical research datasets. Demonstrates common quality facets including completeness, consistency, validity, and timeliness.',
+            description: 'Interactive tool for exploring data quality issues in healthcare data. Demonstrates five data quality facets: data, source, system, task, and human (Mohammed et al., 2025, The Five facets of data quality assessment)',
             icon: 'data_check',
             path: '/data-quality',
             color: 'green'
