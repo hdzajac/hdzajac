@@ -9,7 +9,8 @@ import PublicationsPage from './pages/PublicationsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
 import TeachingPrototypesPage from './pages/TeachingPrototypesPage';
-import HDaiPage from './pages/HDaiPage';
+import EHRViewerPage from './pages/AppEHRViewer';
+import DataQualityPage from './pages/AppDataQuality';
 import { Section } from './types';
 
 const App: React.FC = () => {
@@ -24,8 +25,8 @@ const App: React.FC = () => {
             setSection(Section.HOME);
         } else if (Object.values(Section).includes(path as Section)) {
             setSection(path as Section);
-        } else if (path !== 'hdai') {
-            // Only update for non-hdai routes
+        } else if (path !== 'hdai' && path !== 'data-quality') {
+            // Only update for non-standalone routes
             setSection(Section.HOME);
         }
     }, [location.pathname]);
@@ -78,7 +79,8 @@ const App: React.FC = () => {
     return (
         <>
             <Routes>
-                <Route path="/hdai" element={<HDaiPage />} />
+                <Route path="/hdai" element={<EHRViewerPage />} />
+                <Route path="/data-quality" element={<DataQualityPage />} />
                 <Route path="/*" element={
                     <div className="min-h-screen transition-colors duration-700 relative overflow-x-hidden bg-[#F1F3F4]">
                         <div className="fixed inset-0 transition-opacity duration-1000 blueprint-grid opacity-100"></div>

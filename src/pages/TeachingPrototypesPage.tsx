@@ -16,6 +16,14 @@ const TeachingPrototypesPage: React.FC<TeachingPrototypesPageProps> = ({ renderC
             icon: 'medical_information',
             path: '/hdai',
             color: 'blue'
+        },
+        {
+            id: 'data-quality-explorer',
+            title: 'Data Quality Explorer',
+            description: 'Interactive tool for exploring data quality issues in clinical research datasets. Demonstrates common quality facets including completeness, consistency, validity, and timeliness.',
+            icon: 'data_check',
+            path: '/data-quality',
+            color: 'green'
         }
     ];
 

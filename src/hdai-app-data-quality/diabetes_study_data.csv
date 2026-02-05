@@ -1,0 +1,31 @@
+diabetes_study_data
+patient_id;cpr_number;date;glucose;blood_pressure;weight;hba1c;medication;dose;source;data_location;entered_by
+PT001;010185-2847;2024-01-15;145;128/82;78.5;7.2;Metformin;1000;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT001;010185-2847;2024-01-15;162;;79;7.2;Metformin;1000mg;Patient Self-Report;/active/patient_portal_data.csv;Patient
+PT001;010185-2847;2024-01-15;140;130/84;78;7.2;Metformin;1000;Manual Entry;/active/nursing_vitals.db;RN Hansen
+PT001;010185-2847;2024-02-12;156;132/80;77.8;7.1;Metformin;1000;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT001;010185-2847;2024-02-12;168;;;;Metformin;1g;Patient Self-Report;/active/patient_portal_data.csv;Patient
+PT001;010185-2847;2024-05-20;142;125/78;76.2;6.8;Metformin;1000;Lab;/active/lab_results_current.csv;Lab Tech
+PT001;010185-2847;2024-05-20;139;126/79;76;6.8;Metformin;1000mg;Manual Entry;/active/nursing_vitals.db;RN Olsen
+PT002;150672-3391;2024-01-08;198;145/95;92.3;8.9;Insulin Glargine;24;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT002;150672-3391;2024-01-08;203;;93;;Lantus;24 units;Patient Self-Report;/active/patient_portal_data.csv;Patient
+PT002;150672-3391;2024-01-22;189;142/92;91.8;8.7;Insulin Glargine;24;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT002;150672-3391;2024-02-05;182;138/88;90.5;8.5;Insulin Glargine;24;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT002;150672-3391;2024-02-05;195;;;;Lantus;24u;Manual Entry;/active/nursing_vitals.db;RN Hansen
+PT002;150672-3391;2024-05-18;175;135/85;88.2;7.9;Insulin Glargine;28;Lab;/active/lab_results_current.csv;Lab Tech
+PT002;150672-3391;2024-06-02;171;132/82;87.5;7.8;Insulin Glargine;28;Lab;/active/lab_results_current.csv;Lab Tech
+PT003;230956-1129;2024-01-10;132;118/76;65.4;6.5;None;0;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT003;230956-1129;2024-01-10;128;120/78;65;;None;;Patient Self-Report;/active/patient_portal_data.csv;Patient
+PT003;230956-1129;2024-01-24;135;122/80;65.1;6.4;None;0;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT003;230956-1129;2024-02-14;138;125/82;64.8;6.6;Metformin;500;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT003;230956-1129;2024-02-14;142;;;;Metformin;500mg;Manual Entry;/active/nursing_vitals.db;RN Olsen
+PT003;230956-1129;2024-05-22;129;120/77;64.2;6.3;Metformin;500;Lab;/active/lab_results_current.csv;Lab Tech
+PT003;230956-1129;2024-06-05;126;118/75;64;6.2;Metformin;500;Lab;/active/lab_results_current.csv;Lab Tech
+PT004;050490-2736;2024-01-12;167;135/88;85.2;7.8;Metformin;1500;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT004;050490-2736;2024-01-26;163;133/86;84.8;7.7;Metformin;1500;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT004;050490-2736;2024-02-09;159;130/84;84.2;7.5;Metformin;1500;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT005;110383-4521;2024-01-18;211;152/98;98.5;9.4;Metformin+Sitagliptin;1000+100;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT005;110383-4521;2024-02-01;205;148/95;97.8;9.2;Metformin+Sitagliptin;1000/100mg;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT005;110383-4521;2024-02-15;198;145/92;96.9;9.0;Metformin+Sitagliptin;1000+100;Lab;/archive/2024/lab_results_Q1.proprietary;Lab Tech
+PT005;110383-4521;2024-05-25;186;140/88;95.2;8.5;Metformin+Sitagliptin;1000+100;Lab;/active/lab_results_current.csv;Lab Tech
+PT005;110383-4521;2024-06-08;182;138/86;94.5;8.3;Metformin+Sitagliptin;1000+100;Lab;/active/lab_results_current.csv;Lab Tech
