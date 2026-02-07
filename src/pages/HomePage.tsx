@@ -19,17 +19,17 @@ const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => 
 
             <div className="flex flex-col gap-12 md:gap-20">
                 {/* RESEARCH SNAPSHOT */}
-                {/* <div>
-                    {renderCardHeader("science", "Research direction", "Core Methodology")}
+                <div>
+                    {renderCardHeader("science", "Bio", "Core info")}
                     <div
                         onClick={() => setSection(Section.RESEARCH)}
-                        className="blueprint-module p-6 md:p-10 cursor-pointer group transition-all hover:shadow-2xl bg-white/80 backdrop-blur-sm"
+                        className="blueprint-module p-6 md:p-8 cursor-pointer group transition-all hover:shadow-2xl bg-white/80 backdrop-blur-sm"
                     >
-                        <p className="text-2xl md:text-3xl font-light leading-tight max-w-xl">
-                            Constructing <span className="font-bold italic">logic-scaffolding</span> to house the unknown.
+                        <p className="text-gray-600 leading-tight">
+                            I am a postdoctoral researcher in <i>human-centred AI</i> combining technical development with critical investigation of the AI pipeline: from data design to clinical integration. I build <i>Responsible AI</i> systems through co-design with domain professionals while examining how AI reshapes expertise, work practices, and decision-making in high-stakes domains. Originally from Poland, now based in Denmark.
                         </p>
                     </div>
-                </div> */}
+                </div>
 
                 {/* PAPERS SNAPSHOT */}
                 <div>
@@ -49,7 +49,7 @@ const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => 
                         className="blueprint-module cursor-pointer group transition-all hover:shadow-2xl bg-white/80 backdrop-blur-sm"
                     >
                         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-black/5">
-                            {PROJECTS.map(proj => (
+                            {PROJECTS.map(proj => (`
                                 <div key={proj.id} className="p-4 md:p-6">
                                     <div className="aspect-square mb-4 overflow-hidden border border-gray-100 grayscale group-hover:grayscale-0 transition-all duration-700">
                                         <img src={proj.image} className="w-full h-full object-cover" alt="" />

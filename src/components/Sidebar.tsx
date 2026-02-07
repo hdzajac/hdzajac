@@ -53,6 +53,11 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
             <aside className="hidden lg:flex w-[320px] fixed top-12 left-12 z-50 flex-col pointer-events-none">
                 <div className="blueprint-module bg-white/90 backdrop-blur-md p-8 pointer-events-auto shadow-sm">
                     <div className="mb-12 cursor-pointer" onClick={() => setSection(Section.HOME)}>
+                        <img
+                            src="/headshot.jpg"
+                            alt="Hubert D. Zając"
+                            className=" object-cover  mb-4 border-2 border-black/10"
+                        />
                         <h1 className="font-extrabold text-3xl tracking-tighter leading-[0.9] mb-2 uppercase">
                             Hubert D. <br /> <span className="text-red-600">Zając</span>
                         </h1>
