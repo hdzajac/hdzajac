@@ -58,12 +58,15 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                             alt="Hubert D. Zając"
                             className=" object-cover  mb-4 border-2 border-black/10"
                         />
-                        <h1 className="font-extrabold text-3xl tracking-tighter leading-[0.9] mb-2 uppercase">
+                        <h1 className="font-extrabold text-3xl tracking-tighter leading-[0.9] mb-3 uppercase">
                             Hubert D. <br /> <span className="text-red-600">Zając</span>
                         </h1>
-                        <p className="mono text-xs text-gray-500 uppercase tracking-widest">Postdoc in Human-Centred AI</p>
-                        <p className="mono text-xs text-gray-500 uppercase tracking-widest">University of Copenhagen</p>
-                        <p className="mono text-xs text-gray-500 uppercase tracking-widest">Denmark</p>
+                        <div className="space-y-1 mono text-sm text-gray-600">
+                            <p>Postdoc in Human-Centred AI</p>
+                            <p>University of Copenhagen</p>
+                            <p>Poland → Denmark</p>
+
+                        </div>
                     </div>
 
                     <nav className="flex flex-col space-y-1 mono text-[11px] uppercase tracking-tighter">
