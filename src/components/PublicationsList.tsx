@@ -53,11 +53,32 @@ const PublicationsList: React.FC<PublicationsListProps> = ({
             .catch(error => console.error('Error loading publications:', error));
     }, [limit]);
 
+    // Group publications by year
+    const groupedByYear: { [year: string]: Publication[] } = {};
+    publications.forEach(pub => {
+        if (!groupedByYear[pub.Year]) {
+            groupedByYear[pub.Year] = [];
+        }
+        groupedByYear[pub.Year].push(pub);
+    });
+
+    // Sort years in descending order
+    const years = Object.keys(groupedByYear).sort((a, b) => parseInt(b) - parseInt(a));
+
     return (
         <div className="blueprint-module bg-white/80 backdrop-blur-sm transition-all hover:shadow-2xl">
-            <div className="divide-y divide-black/5">
-                {publications.map((pub, idx) => (
-                    <PublicationItem key={idx} publication={pub} />
+            <div>
+                {years.map((year) => (
+                    <div key={year}>
+                        <div className="px-6 py-4 bg-gray-50 border-b-2 border-red-600">
+                            <h3 className="display-text text-2xl text-black">{year}</h3>
+                        </div>
+                        <div className="divide-y divide-black/5">
+                            {groupedByYear[year].map((pub, idx) => (
+                                <PublicationItem key={idx} publication={pub} />
+                            ))}
+                        </div>
+                    </div>
                 ))}
             </div>
             {showViewAll && onViewAll && (

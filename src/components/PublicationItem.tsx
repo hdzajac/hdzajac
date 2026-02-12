@@ -59,7 +59,7 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
                     <div className="mono text-xs text-gray-400 mb-2 uppercase tracking-wider">
                         {publication.Venue} • {publication.Year}
                     </div>
-                    <h4 className="text-lg md:text-xl font-black uppercase tracking-tight text-black mb-3">
+                    <h4 className="text-lg md:text-xl font-medium text-black mb-3 leading-snug">
                         {publication.Title}
                     </h4>
                     <div className="text-sm text-gray-600 leading-relaxed">
