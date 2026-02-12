@@ -13,24 +13,21 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => {
     return (
         <section className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase transition-all mb-16 md:mb-20 text-black [word-spacing:0.2em]">
+            <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] uppercase transition-all mb-12 md:mb-16 text-black [word-spacing:0.2em]">
                 Designing Responsible AI in <span className="italic text-gray-400">Service</span> of Human Expertise
             </h2>
 
-            <div className="flex flex-col gap-12 md:gap-20">
-                {/* RESEARCH SNAPSHOT */}
-                <div>
-                    {renderCardHeader("science", "Bio", "Core info")}
-                    <div
-                        onClick={() => setSection(Section.RESEARCH)}
-                        className="blueprint-module p-6 md:p-8 cursor-pointer group transition-all hover:shadow-2xl bg-white/80 backdrop-blur-sm"
-                    >
-                        <p className="text-gray-600 leading-tight">
-                            I am a postdoctoral researcher in <i>human-centred AI</i> combining technical development with critical investigation of the AI pipeline: from data design to clinical integration. I build <i>Responsible AI</i> systems through co-design with domain professionals while examining how AI reshapes expertise, work practices, and decision-making in high-stakes domains. Originally from Poland, now based in Denmark.
-                        </p>
-                    </div>
-                </div>
+            {/* BIO TRANSITION */}
+            <div className="mb-16 md:mb-24 border-l-4 border-red-600 pl-6 md:pl-8 text-lg ">
+                <p className="text-gray-700 leading-relaxed mb-4">
+                    I am a postdoctoral researcher in <span className="text-red-600">     Human-Centred AI</span> combining technical development with critical investigation of the AI pipeline: from data design to clinical integration.
+                </p>
+                <p className="text-gray-700 leading-relaxed">
+                    I build <span className="text-red-600">Responsible AI</span> systems through co-design with domain professionals while examining how AI reshapes expertise, work practices, and decision-making in high-stakes domains.
+                </p>
+            </div>
 
+            <div className="flex flex-col gap-12 md:gap-20">
                 {/* PAPERS SNAPSHOT */}
                 <div>
                     {renderCardHeader("description", "Recent publications", "2021—PRESENT")}
@@ -63,7 +60,7 @@ const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => 
 
                 {/* CONTACT SNAPSHOT */}
                 <div>
-                    {renderCardHeader("person", "Who I Am + How to Reach Me", "Direct Transmission")}
+                    {renderCardHeader("person", "Who I Am + How to Reach Me", "")}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <ContactBox />
                         <PhysicalLocationBox />
