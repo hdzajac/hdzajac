@@ -2,6 +2,7 @@ import React from 'react';
 import { Section } from '../types';
 import { PROJECTS } from '../constants';
 import PublicationsList from '../components/PublicationsList';
+import TeachingPrototypesList from '../components/TeachingPrototypesList';
 import ContactBox from '../components/ContactBox';
 import PhysicalLocationBox from '../components/PhysicalLocationBox';
 
@@ -35,6 +36,16 @@ const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => 
                         limit={3}
                         showViewAll={true}
                         onViewAll={() => setSection(Section.PUBLICATIONS)}
+                    />
+                </div>
+
+                {/* TEACHING PROTOTYPES SNAPSHOT */}
+                <div>
+                    {renderCardHeader("school", "Teaching Prototypes", "INTERACTIVE DEMOS")}
+                    <TeachingPrototypesList
+                        limit={2}
+                        showViewAll={true}
+                        onViewAll={() => setSection(Section.TEACHING_PROTOTYPES)}
                     />
                 </div>
 

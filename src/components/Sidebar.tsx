@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                         <img
                             src="/headshot.jpg"
                             alt="Hubert D. Zając"
-                            className="max-w-full h-auto max-h-[18vh] xl:max-h-[30vh] mb-3 xl:mb-4"
+                            className="max-w-full h-auto max-h-[18vh] xl:max-h-[25vh] mb-3 xl:mb-4"
                         />
                         <h1 className="font-extrabold text-2xl xl:text-3xl tracking-tighter leading-[0.9] mb-2 xl:mb-3 uppercase">
                             Hubert D. <br /> <span className="text-red-600">Zając</span>
@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                         </div>
                     </div>
 
-                    <nav className="flex flex-col space-y-0.5 xl:space-y-1 mono text-[10px] xl:text-[11px] uppercase tracking-tighter">
+                    <nav className="flex flex-col space-y-0.5 xl:space-y-1 mono text-xs xl:text-sm uppercase tracking-tighter">
                         {navItems.map((item) => (
                             <button
                                 key={item.id}
@@ -83,7 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                                     <span className={`material-symbols-outlined text-sm xl:text-[16px] ${currentSection === item.id ? 'text-red-500' : 'opacity-40'}`}>
                                         {item.icon}
                                     </span>
-                                    <span>{item.label} {item.fullLabel}</span>
+                                    <span> {item.fullLabel}</span>
                                 </span>
                                 <span className={`opacity-0 group-hover:opacity-100 transition-opacity ${currentSection === item.id ? 'opacity-100' : ''}`}>→</span>
                             </button>
