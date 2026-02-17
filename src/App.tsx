@@ -89,7 +89,7 @@ const App: React.FC = () => {
                         <FloatingAscii />
                         <Sidebar currentSection={section} setSection={handleSetSection} />
 
-                        <main className="lg:ml-[420px] p-6 md:p-12 lg:p-20 pt-24 lg:pt-12 relative z-10 transition-all duration-700 min-h-screen pb-24">
+                        <main className="lg:ml-80 xl:ml-96 p-6 md:p-8 lg:p-10 xl:p-20 pt-20 md:pt-24 lg:pt-8 xl:pt-12 relative z-10 transition-all duration-700 min-h-screen pb-24">
                             {renderContent()}
                         </main>
                     </div>

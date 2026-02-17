@@ -50,18 +50,18 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
             </nav>
 
             {/* DESKTOP FLOATING BOX NAVIGATION */}
-            <aside className="hidden lg:flex w-[320px] fixed top-12 left-12 z-50 flex-col pointer-events-none">
-                <div className="blueprint-module bg-white/90 backdrop-blur-md p-8 pointer-events-auto shadow-sm">
-                    <div className="mb-12 cursor-pointer" onClick={() => setSection(Section.HOME)}>
+            <aside className="hidden lg:flex w-64 xl:w-80 fixed top-6 left-6 xl:top-12 xl:left-12 z-50 flex-col pointer-events-none">
+                <div className="blueprint-module bg-white/90 backdrop-blur-md p-4 xl:p-8 pointer-events-auto shadow-sm">
+                    <div className="mb-4 xl:mb-12 cursor-pointer" onClick={() => setSection(Section.HOME)}>
                         <img
                             src="/headshot.jpg"
                             alt="Hubert D. Zając"
-                            className=" object-cover  mb-4 border-2 border-black/10"
+                            className="max-w-full h-auto max-h-[18vh] xl:max-h-[30vh] mb-3 xl:mb-4"
                         />
-                        <h1 className="font-extrabold text-3xl tracking-tighter leading-[0.9] mb-3 uppercase">
+                        <h1 className="font-extrabold text-2xl xl:text-3xl tracking-tighter leading-[0.9] mb-2 xl:mb-3 uppercase">
                             Hubert D. <br /> <span className="text-red-600">Zając</span>
                         </h1>
-                        <div className="space-y-1 mono text-sm text-gray-600">
+                        <div className="space-y-0.5 xl:space-y-1 mono text-xs xl:text-sm text-gray-600">
                             <p>Postdoc in Human-Centred AI</p>
                             <p>University of Copenhagen</p>
                             <p>Poland → Denmark</p>
@@ -69,18 +69,18 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                         </div>
                     </div>
 
-                    <nav className="flex flex-col space-y-1 mono text-[11px] uppercase tracking-tighter">
+                    <nav className="flex flex-col space-y-0.5 xl:space-y-1 mono text-[10px] xl:text-[11px] uppercase tracking-tighter">
                         {navItems.map((item) => (
                             <button
                                 key={item.id}
                                 onClick={() => setSection(item.id)}
-                                className={`flex items-center justify-between group p-2.5 transition-all text-left ${currentSection === item.id
+                                className={`flex items-center justify-between group p-2 xl:p-2.5 transition-all text-left ${currentSection === item.id
                                     ? 'bg-black text-white'
                                     : 'hover:bg-gray-100 text-gray-600'
                                     }`}
                             >
-                                <span className="flex items-center gap-3">
-                                    <span className={`material-symbols-outlined text-[16px] ${currentSection === item.id ? 'text-red-500' : 'opacity-40'}`}>
+                                <span className="flex items-center gap-2 xl:gap-3">
+                                    <span className={`material-symbols-outlined text-sm xl:text-[16px] ${currentSection === item.id ? 'text-red-500' : 'opacity-40'}`}>
                                         {item.icon}
                                     </span>
                                     <span>{item.label} {item.fullLabel}</span>

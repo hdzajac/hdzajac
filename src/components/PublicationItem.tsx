@@ -54,7 +54,7 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
 
     return (
         <div className="p-6 md:p-8 group/item hover:bg-gray-50/50 transition-colors border-b border-black/5 last:border-0">
-            <div className="flex justify-between items-start gap-6">
+            <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 md:gap-6">
                 <div className="flex-1">
                     <div className="mono text-xs text-gray-400 mb-2 uppercase tracking-wider">
                         {publication.Venue} • {publication.Year}
@@ -66,7 +66,7 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
                         {highlightName(publication.Authors)}
                     </div>
                 </div>
-                <div className="flex flex-col gap-2 items-end">
+                <div className="flex flex-row md:flex-col gap-3 md:gap-2 items-start md:items-end">
                     {publication.Link && (
                         <button
                             onClick={(e) => handleLinkClick(e, publication.Link)}
