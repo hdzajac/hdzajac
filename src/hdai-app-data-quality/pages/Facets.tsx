@@ -76,7 +76,7 @@ const Facets: React.FC = () => {
             <p className="text-sm font-semibold text-amber-900 mb-3">Think about the quality in terms of these three research questions:</p>
             <div className="space-y-2 text-sm text-amber-800">
               <p><strong>RQ 1:</strong> "What is the average HbA1c level in our diabetic patient population?"</p>
-              <p><strong>RQ 2:</strong> "What is the average HbA1c level in diabetic patients in Denmark?"</p>
+              <p><strong>RQ 2:</strong> "How effective is Metformin at controlling blood glucose levels?"</p>
               <p><strong>RQ 3:</strong> "What is patient satisfaction with their diabetes medication?"</p>
             </div>
           </div>
