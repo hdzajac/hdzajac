@@ -9,17 +9,6 @@ const AboutPage: React.FC<AboutPageProps> = ({ renderCardHeader }) => {
         <section className="max-w-5xl animate-in fade-in slide-in-from-right-4 duration-700 pb-32">
             {renderCardHeader("person", "About Me")}
 
-            {/* Bio Section */}
-            {/* <div className="blueprint-module p-8 md:p-12 bg-white/90 backdrop-blur-sm mt-4 mb-8">
-                <h4 className="mono text-xs font-bold uppercase mb-6 border-b pb-2 text-red-600">Bio</h4>
-                <div className="prose prose-lg max-w-none">
-                    <p className="text-lg md:text-xl leading-relaxed text-gray-700">
-                        Add bio content here 
-                        Your short bio goes here. This section provides an introduction to your background, expertise, and research interests.
-                    </p>
-                </div>
-            </div> */}
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                 <div className="blueprint-module p-6 md:p-10 bg-white/90 backdrop-blur-sm">
                     <h4 className="mono text-xs font-bold uppercase mb-8 border-b pb-2 text-red-600">Contact</h4>
