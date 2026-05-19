@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                         <img
                             src="/headshot.jpg"
                             alt="Hubert D. Zając"
-                            className="max-w-full h-auto max-h-[18vh] xl:max-h-[25vh] mb-3 xl:mb-4"
+                            className="max-w-full h-auto max-h-[12vh] xl:max-h-[16vh] mb-3 xl:mb-4"
                         />
                         <h1 className="font-extrabold text-2xl xl:text-3xl tracking-tighter leading-[0.9] mb-2 xl:mb-3 uppercase">
                             Hubert D. <br /> <span className="text-red-600">Zając</span>

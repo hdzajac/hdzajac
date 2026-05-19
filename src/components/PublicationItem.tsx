@@ -56,8 +56,8 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
         <div className="p-6 md:p-8 group/item hover:bg-gray-50/50 transition-colors border-b border-black/5 last:border-0">
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 md:gap-6">
                 <div className="flex-1">
-                    <div className="mono text-xs text-gray-400 mb-2 uppercase tracking-wider">
-                        {publication.Venue} • {publication.Year}
+                    <div className="mono text-2xs text-gray-400 mb-2 uppercase tracking-wider">
+                        {publication.Venue}
                     </div>
                     <h4 className="text-lg md:text-xl font-medium text-black mb-3 leading-snug">
                         {publication.Title}

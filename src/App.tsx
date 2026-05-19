@@ -46,12 +46,12 @@ const App: React.FC = () => {
     }, [section]);
 
     const renderCardHeader = (icon: string, title: string, meta?: string) => (
-        <div className="mb-4 flex flex-col md:flex-row md:items-baseline justify-between w-full max-w-4xl">
+        <div className="mb-8 flex flex-col md:flex-row md:items-baseline justify-between w-full max-w-4xl">
             <div className="flex items-baseline gap-4">
                 <span className="material-symbols-outlined text-lg transition-colors text-red-600">
                     {icon}
                 </span>
-                <h3 className="font-black text-xl md:text-2xl uppercase tracking-tighter text-black">{title}</h3>
+                <h3 className="font-black text-xl md:text-2xl uppercase text-black">{title}</h3>
             </div>
             {meta && (
                 <span className="mono text-[10px] text-gray-400 uppercase tracking-widest hidden md:block">{meta}</span>

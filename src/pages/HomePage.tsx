@@ -14,8 +14,8 @@ interface HomePageProps {
 const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => {
     return (
         <section className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div className="mb-16 md:mb-24 border-l-4 border-red-600 pl-6 md:pl-8 text-lg ">
-                <h3 className="text-2xl md:text-4xl font-bold tracking-tighter leading-[0.85] uppercase  mb-3 md:mb-5 transition-alltext-black [word-spacing:0.2em]">
+            <div className="mb-20 md:mb-32 border-l-4 border-red-600 pl-6 md:pl-8 text-lg ">
+                <h3 className="text-2xl md:text-5xl font-bold tracking-tighter uppercase  [word-spacing:0.2em] mb-3 md:mb-5">
                     <i>How AI Design Choices Redistribute Knowledge, Work, and Expertise</i>
                 </h3>
                 <p className="text-gray-700 leading-relaxed mb-4">
@@ -28,7 +28,7 @@ const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => 
 
             </div>
 
-            <div className="flex flex-col gap-12 md:gap-20">
+            <div className="flex flex-col gap-20 md:gap-32">
                 {/* PAPERS SNAPSHOT */}
                 <div>
                     {renderCardHeader("description", "Recent publications", "2021—PRESENT")}
