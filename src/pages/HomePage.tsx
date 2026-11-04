@@ -19,7 +19,7 @@ const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => 
                     <i>How AI Design Choices Redistribute Knowledge, Work, and Expertise</i>
                 </h3>
                 <p className="text-gray-700 leading-relaxed mb-4">
-                    I am a postdoctoral researcher in Human-Centred AI at the University of Copenhagen. I investigate AI as a design problem, one that begins in the choices made about data, knowledge, and context long before a system reaches its users.
+                    I am a tenure-track assistant professor in Human-Centred AI at the IT University of Copenhagen. I investigate AI as a design problem, one that begins in the choices made about data, knowledge, and context long before a system reaches its users.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
                     I combine technical development and co-design with healthcare professionals, citizens, and industry stakeholders to build AI systems that are responsible, accountable, and genuinely useful. My central concern is how upstream design decisions embed particular perspectives and redistribute expertise, work, and decision-making power in practice.

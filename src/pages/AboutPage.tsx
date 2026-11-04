@@ -11,11 +11,11 @@ const AboutPage: React.FC<AboutPageProps> = ({ renderCardHeader }) => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                 <div className="blueprint-module p-6 md:p-10 bg-white/90 backdrop-blur-sm">
-                    <h4 className="mono text-xs font-bold uppercase mb-8 border-b pb-2 text-red-600">Contact</h4>
+                    <h4 className="mono text-xs font-bold uppercase mb-8 border-b pb-2 text-red-600">Reach me</h4>
                     <div className="space-y-8">
                         <div>
                             <span className="mono text-[10px] text-gray-400 uppercase block mb-1">Electronic Mail</span>
-                            <a href="mailto:hdz@di.ku.dk" className="text-xl md:text-2xl font-black hover:underline transition-colors text-black">HDZ@DI.KU.DK</a>
+                            <a href="mailto:hudaza@itu.dk" className="text-xl md:text-2xl font-black hover:underline transition-colors text-black">hudaza@itu.dk</a>
                             <span className="mt-8 mono text-[10px] text-gray-400 uppercase block mb-1">Phone</span>
                             <div className="text-xl md:text-2xl font-black hover:underline transition-colors text-black">+45 50 14 95 52</div>
                         </div>
@@ -23,8 +23,8 @@ const AboutPage: React.FC<AboutPageProps> = ({ renderCardHeader }) => {
                 </div>
                 <div className="blueprint-module p-6 md:p-10 flex flex-col justify-between transition-all duration-700 bg-black text-white">
                     <div>
-                        <h4 className="mono text-xs font-bold uppercase tracking-widest border-b pb-1 mb-8 border-red-600">Physical Node</h4>
-                        <p className="text-3xl md:text-4xl font-light mb-2">Sigurdsgade 41</p>
+                        <h4 className="mono text-xs font-bold uppercase tracking-widest border-b pb-1 mb-8 border-red-600">Literally reach me</h4>
+                        <p className="text-3xl md:text-4xl font-light mb-2">Rued Langgaards Vej 7</p>
                         <p className="text-xl md:text-2xl font-bold italic mb-8">Copenhagen</p>
                     </div>
                 </div>

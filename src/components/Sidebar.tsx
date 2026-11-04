@@ -62,8 +62,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                             Hubert D. <br /> <span className="text-red-600">Zając</span>
                         </h1>
                         <div className="space-y-0.5 xl:space-y-1 mono text-xs xl:text-sm text-gray-600">
-                            <p>Postdoc in Human-Centred AI</p>
-                            <p>University of Copenhagen</p>
+                            <p className="mb-2">Tenure Track Assistant Professor in Human-Centred AI</p>
+                            <p>HCI & Design</p>
+                            <p>IT University of Copenhagen</p>
                             <p>Poland → Denmark</p>
 
                         </div>
