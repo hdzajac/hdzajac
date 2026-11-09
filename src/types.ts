@@ -19,14 +19,30 @@ export interface Paper {
     abstract?: string;
 }
 
+export interface ProjectLink {
+    label: string;
+    url: string;
+}
+
 export interface Project {
     id: string;
     title: string;
-    description: string;
+    period: string;
+    status: 'current' | 'past';
     icon: string;
-    image: string;
-    action: string;
-    specs?: string[];
+    description: string;
+    /** What we did and how it connects to my research. */
+    contribution: string[];
+    participants: string[];
+    publications?: ProjectLink[];
+    links?: ProjectLink[];
+    image?: {
+        src: string;
+        width: number;
+        height: number;
+        alt: string;
+        caption: string;
+    };
 }
 
 export interface AsciiElement {

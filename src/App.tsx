@@ -42,7 +42,10 @@ const App: React.FC = () => {
     };
 
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // A URL hash means the page scrolls to that element itself.
+        if (!location.hash) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }, [section]);
 
     const renderCardHeader = (icon: string, title: string, meta?: string) => (
@@ -65,8 +68,8 @@ const App: React.FC = () => {
             // return <ResearchPage renderCardHeader={renderCardHeader} />;
             case Section.PUBLICATIONS:
                 return <PublicationsPage renderCardHeader={renderCardHeader} />;
-            // case Section.PROJECTS:
-            // return <ProjectsPage renderCardHeader={renderCardHeader} />;
+            case Section.PROJECTS:
+                return <ProjectsPage renderCardHeader={renderCardHeader} />;
             case Section.TEACHING_PROTOTYPES:
                 return <TeachingPrototypesPage renderCardHeader={renderCardHeader} />;
             case Section.ABOUT:

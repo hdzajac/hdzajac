@@ -21,19 +21,6 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
         }
     };
 
-    const handlePDFDownload = (e: React.MouseEvent, pdfFileName: string) => {
-        e.stopPropagation();
-        if (pdfFileName) {
-            const pdfPath = `/data/pdfs/${pdfFileName}`;
-            const link = document.createElement('a');
-            link.href = pdfPath;
-            link.download = pdfFileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    };
-
     const highlightName = (authors: string) => {
         // Match full name and initials variations
         const namePattern = /((?:Hubert\s+(?:D\.?|Dariusz)\s+)?Zaj[aą]c\s*,?\s*(?:HD|H\.?\s*D\.?)?|(?:HD|H\.?\s*D\.?)\s+Zaj[aą]c|Zaj[aą]c\s*,?\s*Hubert\s+(?:D\.?|Dariusz))/gi;
@@ -81,12 +68,12 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
                     )}
                     {publication.PDF && (
                         <button
-                            onClick={(e) => handlePDFDownload(e, publication.PDF)}
+                            onClick={(e) => handleLinkClick(e, `/data/pdfs/${publication.PDF}`)}
                             className="flex items-center gap-1 text-xs mono uppercase text-red-600 hover:text-red-800 transition-colors group/pdf"
-                            title="Download PDF"
+                            title="Open PDF in a new tab"
                         >
                             <span className="material-symbols-outlined text-base">
-                                download
+                                open_in_new
                             </span>
                             PDF
                         </button>

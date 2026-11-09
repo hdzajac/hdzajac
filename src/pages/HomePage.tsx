@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Section } from '../types';
 import { PROJECTS } from '../constants';
 import PublicationsList from '../components/PublicationsList';
@@ -37,6 +38,37 @@ const HomePage: React.FC<HomePageProps> = ({ setSection, renderCardHeader }) => 
                         showViewAll={true}
                         onViewAll={() => setSection(Section.PUBLICATIONS)}
                     />
+                </div>
+
+                {/* PROJECTS SNAPSHOT */}
+                <div>
+                    {renderCardHeader("account_tree", "Projects", "2020—PRESENT")}
+                    <div className="blueprint-module bg-white/80 backdrop-blur-sm transition-all hover:shadow-2xl">
+                        <ul className="divide-y divide-black/5">
+                            {PROJECTS.map((project) => (
+                                <li key={project.id}>
+                                    <Link
+                                        to={`/projects#${project.id}`}
+                                        className="flex items-center justify-between gap-6 p-6 md:px-8 text-lg md:text-xl font-medium leading-snug hover:bg-gray-50 hover:text-blue-600 transition-colors group/project"
+                                    >
+                                        <span>{project.title}</span>
+                                        <span className="material-symbols-outlined text-base text-gray-400 group-hover/project:text-blue-600 group-hover/project:translate-x-1 transition-all">
+                                            arrow_forward
+                                        </span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                        <div
+                            onClick={() => setSection(Section.PROJECTS)}
+                            className="p-6 text-center cursor-pointer hover:bg-gray-50 transition-colors group/link border-t border-black/5"
+                        >
+                            <span className="mono text-sm uppercase text-blue-600 group-hover/link:text-blue-800 transition-colors inline-flex items-center gap-2">
+                                See all projects
+                                <span className="material-symbols-outlined text-base transition-all group-hover/link:translate-x-1">arrow_forward</span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* TEACHING PROTOTYPES SNAPSHOT */}

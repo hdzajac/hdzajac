@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
         { id: Section.HOME, label: '00', fullLabel: 'Home', icon: 'home' },
         // { id: Section.RESEARCH, label: '01', fullLabel: 'Research direction', icon: 'science' },
         { id: Section.PUBLICATIONS, label: '02', fullLabel: 'Publications', icon: 'description' },
-        // { id: Section.PROJECTS, label: '03', fullLabel: 'Projects', icon: 'account_tree' },
+        { id: Section.PROJECTS, label: '03', fullLabel: 'Projects', icon: 'account_tree' },
         { id: Section.TEACHING_PROTOTYPES, label: '04', fullLabel: 'Teaching Prototypes', icon: 'school' },
         { id: Section.ABOUT, label: '05', fullLabel: 'About Me', icon: 'person' },
     ];
