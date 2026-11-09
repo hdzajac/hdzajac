@@ -2,12 +2,10 @@ import React from 'react';
 
 const PhysicalLocationBox: React.FC = () => {
     return (
-        <div className="blueprint-module p-6 md:p-8 flex flex-col justify-between transition-all hover:shadow-2xl bg-black text-white">
-            <div>
-                <h4 className="mono text-xs font-bold uppercase tracking-widest border-b pb-1 mb-6 border-red-600">Physical Node</h4>
-                <p className="text-2xl md:text-3xl font-light mb-2">IT University of Copenhagen</p>
-                <p className="text-lg md:text-xl font-bold italic">Rued Langgaards Vej 7</p>
-            </div>
+        <div className="blueprint-module p-6 md:p-8 bg-black text-white">
+            <h3 className="type-label text-white/70 border-b border-white/30 pb-2 mb-6">Literally reach me</h3>
+            <p className="type-feature mb-2">IT University of Copenhagen</p>
+            <p className="type-item italic">Rued Langgaards Vej 7</p>
         </div>
     );
 };

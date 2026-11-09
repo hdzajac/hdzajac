@@ -40,7 +40,6 @@ export const PROJECTS: Project[] = [
         title: '1813AI: Responsible AI for the Emergency Hotline',
         period: '2025—2027',
         status: 'current',
-        icon: 'emergency',
         description: 'A citizen-facing AI chat that guides people while they wait on Denmark\'s 1813 medical hotline. It is built on a locally fine-tuned language model, Denmark\'s largest emergency-call dataset (over 4 million records), and verified health information, and it is designed to say when it cannot give a definitive answer.',
         contribution: [
             'We combine NLP and HCI, developing the system with clinicians and testing it with citizens throughout. The project takes my work on LLM design choices from clinician-facing tools to a public service.'
@@ -61,7 +60,6 @@ export const PROJECTS: Project[] = [
         title: 'Data-Grounded AI Innovation',
         period: '2024—Present',
         status: 'current',
-        icon: 'groups',
         description: 'A brainstorming method that starts from what an organisation\'s data can actually support, developed through workshops with the companies Simply and Alphalyse.',
         contribution: [
             'Nur Yildirim\'s AI brainstorming toolkit, tested in clinical settings, showed that data-informed ideation creates stronger opportunities. We made data the starting point: after interviews on the work, product, users, and data, teams mapped their current and future data, turned it into "AI can, based on, so that" opportunities, and stress-tested the best ones by asking what happens when the AI is wrong.',
@@ -91,7 +89,6 @@ export const PROJECTS: Project[] = [
         title: 'AI for Clinical Reporting in Teledermatology',
         period: '2024—2026',
         status: 'past',
-        icon: 'dermatology',
         description: 'LLM-generated dermatology reports, designed with the start-up Melatech for the general practitioners who act on them rather than only the specialists who write them.',
         contribution: [
             'We coded 162 anonymised reports, co-designed a report template with 12 GPs, and studied an LLM prototype with 10 dermatologists.',
@@ -121,7 +118,6 @@ export const PROJECTS: Project[] = [
         title: 'Designing Data for EEG AI with BrainCapture',
         period: '2025—2026',
         status: 'past',
-        icon: 'neurology',
         description: 'BrainCapture makes mobile EEG equipment and is working towards a foundation model for interpreting brain signals, to widen access to epilepsy diagnosis.',
         contribution: [
             'We worked out how to frame the annotation of EEG data for machine learning, deciding how it should be labelled and structured before model training. This extended my research on designing ground truth to brain signals.'
@@ -141,7 +137,6 @@ export const PROJECTS: Project[] = [
         title: 'AI4XRAY',
         period: '2020—2024',
         status: 'past',
-        icon: 'radiology',
         description: 'An AI system for prioritising chest X-rays and giving radiologists a second opinion, built for both Denmark and Kenya with funding from Innovation Fund Denmark.',
         contribution: [
             'We studied chest X-ray work with 18 radiologists at nine sites, then ran 19 design sessions with 13 radiologists across three versions of a working prototype. The result: clinical usefulness depends on configuring AI to the site, the user\'s expertise, and the situation and patient.',
@@ -175,30 +170,3 @@ export const PROJECTS: Project[] = [
         }
     }
 ];
-
-export const ASCII_ART: string[] = [
-    `[+]`,
-    `/ \\`,
-    `|--|`,
-    `>>`,
-    `_.*._`,
-    `{ : }`,
-    `<|--|>`,
-    `0xFD`,
-    `::::`,
-    `[SYS]`,
-    `((.))`,
-    `[====]`,
-    `#_#`,
-    `^v^`
-];
-
-export const generateFloatingAscii = (count: number): AsciiElement[] => {
-    return Array.from({ length: count }).map((_, i) => ({
-        id: `ascii-${i}`,
-        text: ASCII_ART[Math.floor(Math.random() * ASCII_ART.length)],
-        top: Math.random() * 100,
-        left: Math.random() * 100,
-        delay: Math.random() * 5
-    }));
-};

@@ -7,7 +7,7 @@ const Rotating3DMagic: React.FC = () => {
         // Add keyframes for floating animation
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes float {
+            @keyframes rotating-figure-drift {
                 0% {
                     transform: translate(0, 0);
                 }
@@ -157,7 +157,7 @@ const Rotating3DMagic: React.FC = () => {
                 zIndex: 1,
                 pointerEvents: 'none',
                 overflow: 'hidden',
-                opacity: 0.2
+                opacity: 0.12
             }}
         >
             <div
@@ -177,7 +177,7 @@ const Rotating3DMagic: React.FC = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    animation: 'float 60s linear infinite'
+                    animation: 'rotating-figure-drift 60s linear infinite'
                 }}
             />
         </div>

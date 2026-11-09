@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import FloatingAscii from './components/FloatingAscii';
 import Rotating3DMagic from './components/Rotating3DMagic';
 import HomePage from './pages/HomePage';
-import ResearchPage from './pages/ResearchPage';
 import PublicationsPage from './pages/PublicationsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
@@ -48,34 +46,18 @@ const App: React.FC = () => {
         }
     }, [section]);
 
-    const renderCardHeader = (icon: string, title: string, meta?: string) => (
-        <div className="mb-8 flex flex-col md:flex-row md:items-baseline justify-between w-full max-w-4xl">
-            <div className="flex items-baseline gap-4">
-                <span className="material-symbols-outlined text-lg transition-colors text-red-600">
-                    {icon}
-                </span>
-                <h3 className="font-black text-xl md:text-2xl uppercase text-black">{title}</h3>
-            </div>
-            {meta && (
-                <span className="mono text-[10px] text-gray-400 uppercase tracking-widest hidden md:block">{meta}</span>
-            )}
-        </div>
-    );
-
     const renderContent = () => {
         switch (section) {
-            // case Section.RESEARCH:
-            // return <ResearchPage renderCardHeader={renderCardHeader} />;
             case Section.PUBLICATIONS:
-                return <PublicationsPage renderCardHeader={renderCardHeader} />;
+                return <PublicationsPage />;
             case Section.PROJECTS:
-                return <ProjectsPage renderCardHeader={renderCardHeader} />;
+                return <ProjectsPage />;
             case Section.TEACHING_PROTOTYPES:
-                return <TeachingPrototypesPage renderCardHeader={renderCardHeader} />;
+                return <TeachingPrototypesPage />;
             case Section.ABOUT:
-                return <AboutPage renderCardHeader={renderCardHeader} />;
+                return <AboutPage />;
             default:
-                return <HomePage setSection={handleSetSection} renderCardHeader={renderCardHeader} />;
+                return <HomePage setSection={handleSetSection} />;
         }
     };
 
@@ -85,14 +67,15 @@ const App: React.FC = () => {
                 <Route path="/hdai" element={<EHRViewerPage />} />
                 <Route path="/data-quality" element={<DataQualityPage />} />
                 <Route path="/*" element={
-                    <div className="min-h-screen transition-colors duration-700 relative overflow-x-hidden bg-[#F1F3F4]">
+                    <div className="min-h-screen transition-colors duration-700 relative overflow-x-clip bg-[#F1F3F4]">
                         <div className="fixed inset-0 transition-opacity duration-1000 blueprint-grid opacity-100"></div>
 
-                        <Rotating3DMagic />
-                        <FloatingAscii />
+                        <div className="hidden motion-safe:lg:block">
+                            <Rotating3DMagic />
+                        </div>
                         <Sidebar currentSection={section} setSection={handleSetSection} />
 
-                        <main className="lg:ml-80 xl:ml-96 p-6 md:p-8 lg:p-10 xl:p-20 pt-20 md:pt-24 lg:pt-8 xl:pt-12 relative z-10 transition-all duration-700 min-h-screen pb-24">
+                        <main className="lg:ml-80 xl:ml-96 p-4 md:p-8 lg:p-10 xl:p-20 pt-20 md:pt-24 lg:pt-8 xl:pt-12 relative z-10 transition-all duration-700 min-h-screen pb-24">
                             {renderContent()}
                         </main>
                     </div>

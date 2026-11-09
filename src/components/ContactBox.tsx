@@ -2,24 +2,24 @@ import React from 'react';
 
 const ContactBox: React.FC = () => {
     return (
-        <div className="blueprint-module p-6 md:p-8 bg-white/90 backdrop-blur-sm transition-all hover:shadow-2xl">
-            <h4 className="mono text-xs font-bold uppercase mb-6 border-b pb-2 text-red-600">Reach me</h4>
-            <div className="space-y-6">
+        <div className="blueprint-module p-6 md:p-8 bg-white">
+            <h3 className="type-label border-b border-black/10 pb-2 mb-6">Reach me</h3>
+            <div className="space-y-5">
                 <div>
-                    <span className="mono text-[10px] text-gray-400 uppercase block mb-1">Electronic Mail</span>
-                    <a href="mailto:hudaza@itu.dk" className="text-lg md:text-xl font-black hover:underline transition-colors text-black">hudaza@itu.dk</a>
+                    <div className="type-label mb-1">Electronic Mail</div>
+                    <a href="mailto:hudaza@itu.dk" className="type-item font-black text-blue-600 hover:text-blue-800 transition-colors">hudaza@itu.dk</a>
                 </div>
                 <div>
-                    <span className="mono text-[10px] text-gray-400 uppercase block mb-1">Phone</span>
-                    <div className="text-lg md:text-xl font-black text-black">+45 50 14 95 52</div>
+                    <div className="type-label mb-1">Phone</div>
+                    <div className="type-item">+45 50 14 95 52</div>
                 </div>
                 <div>
-                    <span className="mono text-[10px] text-gray-400 uppercase block mb-1">LinkedIn</span>
+                    <div className="type-label mb-1">LinkedIn</div>
                     <a
                         href="https://www.linkedin.com/in/hdzajac/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-lg md:text-xl font-black hover:underline transition-colors text-black inline-flex items-center gap-2"
+                        className="type-item text-blue-600 hover:text-blue-800 transition-colors"
                     >
                         /in/hdzajac
                     </a>

@@ -29,7 +29,6 @@ export interface Project {
     title: string;
     period: string;
     status: 'current' | 'past';
-    icon: string;
     description: string;
     /** What we did and how it connects to my research. */
     contribution: string[];

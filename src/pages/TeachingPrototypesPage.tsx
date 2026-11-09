@@ -1,22 +1,17 @@
 import React from 'react';
 import TeachingPrototypesList from '../components/TeachingPrototypesList';
+import SectionHeading from '../components/SectionHeading';
 
-interface TeachingPrototypesPageProps {
-    renderCardHeader: (icon: string, title: string, meta?: string) => React.ReactElement;
-}
-
-const TeachingPrototypesPage: React.FC<TeachingPrototypesPageProps> = ({ renderCardHeader }) => {
+const TeachingPrototypesPage: React.FC = () => {
     return (
         <section className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {renderCardHeader("school", "Teaching Prototypes", "INTERACTIVE DEMOS")}
+            <SectionHeading title="Teaching Prototypes" />
 
-            <div className="mb-8">
-                <p className="text-lg text-gray-600">
-                    Interactive prototypes and demonstrations built for teaching and research purposes.
-                </p>
-            </div>
+            <p className="type-item font-normal text-gray-700 max-w-[62ch] mb-6 md:mb-8">
+                Interactive prototypes and demonstrations built for teaching and research purposes.
+            </p>
 
-            <TeachingPrototypesList showViewAll={false} layout="cards" />
+            <TeachingPrototypesList layout="cards" />
         </section>
     );
 };

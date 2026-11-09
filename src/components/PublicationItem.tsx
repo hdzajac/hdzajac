@@ -7,20 +7,16 @@ export interface Publication {
     Venue: string;
     Link: string;
     PDF: string;
+    ShortVenue: string;
 }
 
 interface PublicationItemProps {
     publication: Publication;
 }
 
-const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
-    const handleLinkClick = (e: React.MouseEvent, url: string) => {
-        e.stopPropagation();
-        if (url) {
-            window.open(url, '_blank', 'noopener,noreferrer');
-        }
-    };
+const linkClass = 'type-label text-blue-600 hover:text-blue-800 transition-colors';
 
+const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
     const highlightName = (authors: string) => {
         // Match full name and initials variations
         const namePattern = /((?:Hubert\s+(?:D\.?|Dariusz)\s+)?Zaj[aą]c\s*,?\s*(?:HD|H\.?\s*D\.?)?|(?:HD|H\.?\s*D\.?)\s+Zaj[aą]c|Zaj[aą]c\s*,?\s*Hubert\s+(?:D\.?|Dariusz))/gi;
@@ -30,7 +26,7 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
         return parts.map((part, index) => {
             if (part && part.match(namePattern)) {
                 return (
-                    <span key={index} className="text-red-600 font-extrabold">
+                    <span key={index} className="text-black font-bold">
                         {part}
                     </span>
                 );
@@ -40,45 +36,27 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ publication }) => {
     };
 
     return (
-        <div className="p-6 md:p-8 group/item hover:bg-gray-50/50 transition-colors border-b border-black/5 last:border-0">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 md:gap-6">
-                <div className="flex-1">
-                    <div className="mono text-2xs text-gray-400 mb-2 uppercase tracking-wider">
-                        {publication.Venue}
-                    </div>
-                    <h4 className="text-lg md:text-xl font-medium text-black mb-3 leading-snug">
-                        {publication.Title}
-                    </h4>
-                    <div className="text-sm text-gray-600 leading-relaxed">
-                        {highlightName(publication.Authors)}
-                    </div>
-                </div>
-                <div className="flex flex-row md:flex-col gap-3 md:gap-2 items-start md:items-end">
-                    {publication.Link && (
-                        <button
-                            onClick={(e) => handleLinkClick(e, publication.Link)}
-                            className="flex items-center gap-1 text-xs mono uppercase text-blue-600 hover:text-blue-800 transition-colors group/link"
-                            title="View publication"
-                        >
-                            <span className="material-symbols-outlined text-base transition-all group-hover/link:translate-x-1 group-hover/link:-translate-y-1">
-                                north_east
-                            </span>
-                            Link
-                        </button>
-                    )}
-                    {publication.PDF && (
-                        <button
-                            onClick={(e) => handleLinkClick(e, `/data/pdfs/${publication.PDF}`)}
-                            className="flex items-center gap-1 text-xs mono uppercase text-red-600 hover:text-red-800 transition-colors group/pdf"
-                            title="Open PDF in a new tab"
-                        >
-                            <span className="material-symbols-outlined text-base">
-                                open_in_new
-                            </span>
-                            PDF
-                        </button>
-                    )}
-                </div>
+        <div className="p-6 md:p-8">
+            <div className="type-label mb-2" title={publication.Venue}>
+                {publication.ShortVenue}
+            </div>
+            <h4 className="type-item text-black mb-2">
+                {publication.Title}
+            </h4>
+            <div className="type-small text-gray-600">
+                {highlightName(publication.Authors)}
+            </div>
+            <div className="flex gap-5 mt-3">
+                {publication.Link && (
+                    <a href={publication.Link} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                        {publication.Link.includes('doi.org') ? 'DOI' : 'Link'} ↗
+                    </a>
+                )}
+                {publication.PDF && (
+                    <a href={`/data/pdfs/${publication.PDF}`} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                        PDF ↗
+                    </a>
+                )}
             </div>
         </div>
     );

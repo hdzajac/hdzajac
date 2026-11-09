@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PublicationItem, { Publication } from './PublicationItem';
+import ViewAll from './ViewAll';
 
 interface PublicationsListProps {
     limit?: number;
@@ -43,7 +44,8 @@ const PublicationsList: React.FC<PublicationsListProps> = ({
                         Title: values[2] || '',
                         Venue: values[3] || '',
                         Link: values[4] || '',
-                        PDF: values[5] || ''
+                        PDF: values[5] || '',
+                        ShortVenue: values[6] || ''
                     };
                 });
 
@@ -66,32 +68,20 @@ const PublicationsList: React.FC<PublicationsListProps> = ({
     const years = Object.keys(groupedByYear).sort((a, b) => parseInt(b) - parseInt(a));
 
     return (
-        <div className="blueprint-module bg-white/80 backdrop-blur-sm transition-all hover:shadow-2xl">
-            <div>
-                {years.map((year) => (
-                    <div key={year}>
-                        <div className="px-6 py-4 bg-gray-50 border-b-2 border-red-600">
-                            <h3 className="display-text text-2xl text-black">{year}</h3>
-                        </div>
-                        <div className="divide-y divide-black/5">
-                            {groupedByYear[year].map((pub, idx) => (
-                                <PublicationItem key={idx} publication={pub} />
-                            ))}
-                        </div>
+        <div className="blueprint-module bg-white">
+            {years.map((year) => (
+                <div key={year} className="md:grid md:grid-cols-[8rem_1fr] border-t border-black first:border-t-0">
+                    <div className="px-6 pt-6 md:pt-8 md:pl-8 md:pr-0">
+                        <h3 className="type-feature md:sticky md:top-8">{year}</h3>
                     </div>
-                ))}
-            </div>
-            {showViewAll && onViewAll && (
-                <div
-                    onClick={onViewAll}
-                    className="p-6 text-center cursor-pointer hover:bg-gray-50 transition-colors group/link border-t border-black/5"
-                >
-                    <span className="mono text-sm uppercase text-blue-600 group-hover/link:text-blue-800 transition-colors inline-flex items-center gap-2">
-                        See all publications
-                        <span className="material-symbols-outlined text-base transition-all group-hover/link:translate-x-1">arrow_forward</span>
-                    </span>
+                    <div className="divide-y divide-black/10">
+                        {groupedByYear[year].map((pub, idx) => (
+                            <PublicationItem key={idx} publication={pub} />
+                        ))}
+                    </div>
                 </div>
-            )}
+            ))}
+            {showViewAll && onViewAll && <ViewAll label="See all publications" onClick={onViewAll} />}
         </div>
     );
 };

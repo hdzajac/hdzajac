@@ -1,30 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Project, ProjectLink } from '../types';
 import { PROJECTS } from '../constants';
-
-interface ProjectsPageProps {
-    renderCardHeader: (icon: string, title: string, meta?: string) => React.ReactElement;
-}
-
-const labelClass = 'mono text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3';
+import SectionHeading from '../components/SectionHeading';
 
 const LinkList: React.FC<{ title: string; items: ProjectLink[] }> = ({ title, items }) => (
     <div>
-        <h5 className={labelClass}>{title}</h5>
-        <ul className="space-y-2">
+        <h4 className="type-label mb-2">{title}</h4>
+        <ul className="space-y-1.5">
             {items.map((item) => (
                 <li key={item.url}>
                     <a
                         href={item.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-blue-600 hover:text-blue-800 transition-colors inline-flex items-start gap-1 group/link"
+                        className="type-small text-blue-600 hover:text-blue-800 transition-colors"
                     >
-                        <span>{item.label}</span>
-                        <span className="material-symbols-outlined text-base transition-all group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
-                            north_east
-                        </span>
+                        {item.label} ↗
                     </a>
                 </li>
             ))}
@@ -32,65 +24,64 @@ const LinkList: React.FC<{ title: string; items: ProjectLink[] }> = ({ title, it
     </div>
 );
 
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => (
-    <article id={project.id} className="blueprint-module bg-white/90 backdrop-blur-sm scroll-mt-20 lg:scroll-mt-8">
-        {project.image && (
-            <figure className="border-b border-black/5">
-                <img
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    width={project.image.width}
-                    height={project.image.height}
-                    loading="lazy"
-                    className="w-full h-auto"
-                />
-                <figcaption className="mono text-[10px] text-gray-500 px-6 md:px-10 py-3">
-                    {project.image.caption}
-                </figcaption>
-            </figure>
-        )}
+const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+    const [detailsOpen, setDetailsOpen] = useState(false);
 
-        <div className="p-6 md:p-10">
-            <div className="flex items-start justify-between gap-6 mb-6">
-                <div>
-                    <p className="mono text-xs text-gray-500 uppercase tracking-wider mb-2">
-                        {project.period}
-                    </p>
-                    <h4 className="text-xl md:text-2xl font-bold tracking-tight leading-snug">{project.title}</h4>
-                </div>
-                <span className="material-symbols-outlined text-3xl text-red-600 shrink-0">{project.icon}</span>
-            </div>
+    return (
+        <article id={project.id} className="blueprint-module bg-white scroll-mt-20 lg:scroll-mt-8">
+            {project.image && (
+                <figure className="border-b border-black/10">
+                    <img
+                        src={project.image.src}
+                        alt={project.image.alt}
+                        width={project.image.width}
+                        height={project.image.height}
+                        loading="lazy"
+                        className="w-full h-auto"
+                    />
+                    <figcaption className="type-small text-gray-500 px-6 md:px-8 py-3">
+                        {project.image.caption}
+                    </figcaption>
+                </figure>
+            )}
 
-            <p className="text-gray-700 leading-relaxed mb-8">{project.description}</p>
+            <div className="p-6 md:p-8">
+                <p className="type-label mb-2">{project.period}</p>
+                <h3 className="type-feature mb-4">{project.title}</h3>
+                <p className="type-body text-gray-700 max-w-[70ch] mb-6">{project.description}</p>
 
-            <div className="border-l-4 border-red-600 pl-5 mb-8">
-                <h5 className={labelClass}>What we did</h5>
-                <div className="space-y-4">
+                <h4 className="type-label mb-2">What we did</h4>
+                <div className="space-y-3 max-w-[70ch]">
                     {project.contribution.map((paragraph) => (
-                        <p key={paragraph} className="text-gray-700 leading-relaxed">{paragraph}</p>
+                        <p key={paragraph} className="type-body text-gray-700">{paragraph}</p>
                     ))}
                 </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-black/5 pt-6">
-                <div>
-                    <h5 className={labelClass}>Participants</h5>
-                    <ul className="space-y-2 text-sm text-gray-600 leading-relaxed">
-                        {project.participants.map((participant) => (
-                            <li key={participant}>{participant}</li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="space-y-6">
-                    {project.publications && <LinkList title="Publications" items={project.publications} />}
-                    {project.links && <LinkList title="Links" items={project.links} />}
+                <button
+                    type="button"
+                    onClick={() => setDetailsOpen(!detailsOpen)}
+                    aria-expanded={detailsOpen}
+                    className="md:hidden type-label text-blue-600 mt-6"
+                >
+                    {detailsOpen ? 'Hide details −' : 'People and links +'}
+                </button>
+
+                <div className={`${detailsOpen ? 'grid' : 'hidden'} md:grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 md:mt-8 border-t border-black/10 pt-6`}>
+                    <div>
+                        <h4 className="type-label mb-2">Participants</h4>
+                        <p className="type-small text-gray-600">{project.participants.join(' · ')}</p>
+                    </div>
+                    <div className="space-y-6">
+                        {project.publications && <LinkList title="Publications" items={project.publications} />}
+                        {project.links && <LinkList title="Links" items={project.links} />}
+                    </div>
                 </div>
             </div>
-        </div>
-    </article>
-);
+        </article>
+    );
+};
 
-const ProjectsPage: React.FC<ProjectsPageProps> = ({ renderCardHeader }) => {
+const ProjectsPage: React.FC = () => {
     const { hash } = useLocation();
 
     useEffect(() => {
@@ -100,16 +91,16 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ renderCardHeader }) => {
     }, [hash]);
 
     const groups = [
-        { title: 'Current projects', icon: 'account_tree', projects: PROJECTS.filter((p) => p.status === 'current') },
-        { title: 'Past projects', icon: 'history', projects: PROJECTS.filter((p) => p.status === 'past') },
+        { title: 'Current projects', projects: PROJECTS.filter((p) => p.status === 'current') },
+        { title: 'Past projects', projects: PROJECTS.filter((p) => p.status === 'past') },
     ];
 
     return (
-        <section className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700 flex flex-col gap-20 md:gap-24">
+        <section className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700 flex flex-col gap-14 md:gap-20">
             {groups.map((group) => (
                 <div key={group.title}>
-                    {renderCardHeader(group.icon, group.title)}
-                    <div className="flex flex-col gap-10">
+                    <SectionHeading title={group.title} />
+                    <div className="flex flex-col gap-6 md:gap-8">
                         {group.projects.map((project) => (
                             <ProjectCard key={project.id} project={project} />
                         ))}
