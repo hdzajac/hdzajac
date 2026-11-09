@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
         { id: Section.HOME, label: 'Home', fullLabel: 'Home', icon: 'home' },
         { id: Section.PUBLICATIONS, label: 'Papers', fullLabel: 'Publications', icon: 'description' },
         { id: Section.PROJECTS, label: 'Projects', fullLabel: 'Projects', icon: 'account_tree' },
-        { id: Section.TEACHING_PROTOTYPES, label: 'Teaching', fullLabel: 'Teaching Prototypes', icon: 'school' },
+        { id: Section.TEACHING_PROTOTYPES, label: 'Prototypes', fullLabel: 'Teaching Prototypes', icon: 'deployed_code' },
         { id: Section.ABOUT, label: 'About', fullLabel: 'About Me', icon: 'person' },
     ];
 
@@ -33,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentSection, setSection }) => {
                         key={item.id}
                         onClick={() => setSection(item.id)}
                         aria-current={currentSection === item.id ? 'page' : undefined}
-                        className={`flex-1 min-w-0 flex flex-col items-center justify-center gap-0.5 border-b-2 ${currentSection === item.id
+                        className={`flex-auto flex flex-col items-center justify-center gap-0.5 border-b-2 ${currentSection === item.id
                             ? 'text-red-600 border-red-600'
                             : 'text-gray-600 border-transparent'
                             }`}
